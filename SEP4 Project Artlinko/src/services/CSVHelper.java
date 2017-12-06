@@ -9,33 +9,24 @@ import java.util.Vector;
 
 
 
+/**
+ * Service class that handles the parsing of the csv file
+ * 
+ * @author Alexandru
+ * 
+ */
 public class CSVHelper implements TestingVariables
 {
-    public static void writeLine(Writer w, List<String> values) 
-        throws Exception
-    {
-        boolean firstVal = true;
-        for (String val : values)  {
-            if (!firstVal) {
-                w.write(",");
-            }
-            w.write("\"");
-            for (int i=0; i<val.length(); i++) {
-                char ch = val.charAt(i);
-                if (ch=='\"') {
-                    w.write("\"");  //extra quote
-                }
-                w.write(ch);
-            }
-            w.write("\"");
-            firstVal = false;
-        }
-        w.write("\n");
-    }
  
+
     /**
-    * Returns a null when the input stream is empty
-    */
+     * 
+     * Parses the lines from the files
+     * Returns a null when the input stream is empty
+     * @param r
+     * @return
+     * @throws Exception
+     */
     public static List<String> parseLine(Reader r) throws Exception {
         int ch = r.read();
         while (ch == '\r') {
@@ -62,8 +53,6 @@ public class CSVHelper implements TestingVariables
                 if (ch == '\"') {
                     inquotes = true;
                     if (started) {
-   // if this is the second quote in a value, add a quote
-   // this is for the double quote in the middle of a value
                         curVal.append('\"');
                     }
                 }
@@ -90,6 +79,12 @@ public class CSVHelper implements TestingVariables
     }
     
     
+    /**
+     *	Reads all the data from the file using the parseLine method 
+     * @param filePath
+     * @return
+     * @throws Exception
+     */
     public static List<List<String>> readData(String filePath) throws Exception {
         List<List<String>> collection = new Vector<List<String>>();
         File fileTemplate = new File(TESTPATH);
@@ -106,6 +101,13 @@ public class CSVHelper implements TestingVariables
     }
     
     
+    /**
+     * Returns the first line of the reading of the csv file which represents
+     * the structure of the survey
+     * 
+     * @param list
+     * @return
+     */
     public static List<String> getSurveyStructure(List<List<String>> list){
     	return list.get(0);
     }
