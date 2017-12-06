@@ -1,0 +1,20 @@
+INDEX VERSION 1.127+C:\SCHOOL\SEP4\Repository\.metadata\.plugins\org.eclipse.jdt.core
+2107586581.index
+3730148739.index
+2512212247.index
+4135971222.index
+79507310.index
+1752858622.index
+2259744079.index
+3436182321.index
+185482189.index
+3181255480.index
+2136018799.index
+2857250255.index
+333148444.index
+2805772339.index
+3815416218.index
+149594755.index
+2695330070.index
+582581220.index
+436509583.index
