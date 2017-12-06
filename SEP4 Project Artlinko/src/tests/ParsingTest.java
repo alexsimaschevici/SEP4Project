@@ -1,0 +1,76 @@
+package tests;
+
+
+
+import static org.junit.Assert.*;
+
+import java.util.List;
+
+import org.junit.Test;
+
+import services.CSVHelper;
+
+public class ParsingTest
+{
+
+   String elem1 = "Response ID";
+   String elem2 = "Panel Company Redirect (Completed)";
+   int numbOfRows = 501;
+   CSVHelper testobj = new CSVHelper();
+   List<List<String>> list = null;
+   public final String TESTPATH = "C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv";
+
+   
+   
+   /**
+    * We're using boundary testing, where we perform a horizontal check,
+    * with the first and last name of the columns,
+    * as well as the total number of rows - responses PLUS the column names  
+    */
+   @Test
+   public void fetchFirstColNameTest()
+   {
+      try
+      {
+         list = testobj.readData(TESTPATH);
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      String result = list.get(0).get(0);
+
+      assertEquals(elem1, result);
+   }
+   
+   @Test
+   public void fetchLastColNameTest() {
+      try
+      {
+         list = testobj.readData(TESTPATH);
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      String result = list.get(0).get(list.get(0).size()-1);
+
+      assertEquals(elem2, result);
+   }
+   
+   @Test
+   public void checkNumbOfRows(){
+      try
+      {
+         list = testobj.readData(TESTPATH);
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
+      }
+      int result = list.size();
+
+      assertEquals(numbOfRows, result);
+   }
+
+}
