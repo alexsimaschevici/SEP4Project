@@ -19,8 +19,8 @@ public class DataValidationTest
    ArrayList<Long> valueList = new ArrayList<Long>()
    {
       {
+         add((long) 0.0);
          add((long) 70000);
-         add((long) 100000);
 
       }
    };;
@@ -40,7 +40,7 @@ public class DataValidationTest
    @Test
    public void rangeValidation()
    {
-      answers.add("over 18");
+      answers.add("11-18");
       answers.add("-12");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?");
       boolean result = dv.isRange(res);
@@ -60,7 +60,7 @@ public class DataValidationTest
    @Test
    public void currValReturnValidation()
    {
-      answers.add("$ 70,000-$ 100,000");
+      answers.add("under $70,000");
       ResponseQA res = new ResponseQA(answers, "What's your salary?");
       ArrayList<Long> result = dv.returnCurrValues(res);
       assertEquals(valueList, result);
