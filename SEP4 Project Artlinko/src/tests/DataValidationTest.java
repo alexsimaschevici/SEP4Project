@@ -30,7 +30,7 @@ public class DataValidationTest
    @Test
    public void rangeValidation()
    {
-      answers.add("11.2-12.5");
+      answers.add("over 18");
       answers.add("-12");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?"); 
       boolean result = dv.isRange(res);
@@ -44,6 +44,16 @@ public class DataValidationTest
       answers.add("-12.3");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?"); 
       boolean result = dv.isLong(res);
+      assertEquals(valid, result);
+   }
+   
+   @Test
+   public void ageValidation()
+   {
+      answers.add("18-25");
+      answers.add("-12.3");
+      ResponseQA res = new ResponseQA(answers, "What's the temperature?"); 
+      boolean result = dv.isAge(res);
       assertEquals(valid, result);
    }
    

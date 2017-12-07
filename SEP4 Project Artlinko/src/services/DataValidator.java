@@ -28,20 +28,29 @@ public class DataValidator
    {
 
       String str = response.getAnswers().get(0);
-      String[] arr = str.split("-");
-      int length1 = arr[0].length();
-      int length2 = arr[1].length();
 
-      if ((arr.length != 2) || (length1 == 0) || (length2 == 0))
-         return false;
-      else if ((length1 == length2) || (length1 + 1 == length2))
+      if ((str.startsWith("under")) || (str.startsWith("over")))
          return true;
       else
-         return true;
+      {
+         String[] arr = str.split("-");
+         int length1 = arr[0].length();
+         int length2 = arr[1].length();
+
+         if (((arr.length != 2) || (length1 == 0) || (length2 == 0)))
+
+            return false;
+
+         else if ((length1 == length2) || (length1 + 1 == length2))
+            return true;
+         else
+            return true;
+      }
    }
-   
-   public boolean isLong(ResponseQA response){
-      
+
+   public boolean isLong(ResponseQA response)
+   {
+
       String str = response.getAnswers().get(0);
 
       try
@@ -53,7 +62,24 @@ public class DataValidator
          return false;
       }
       return true;
-    
+
+   }
+
+   public boolean isAge(ResponseQA response)
+   {
+      String str = response.getAnswers().get(0);
+
+      if (isRange(response))
+      {
+         if (str.matches("\\d{2}-\\d{2}"))
+            return true;
+         else if ((str.matches("under \\d{2}")) || str.matches("over \\d{2}"))
+            return true;
+         else
+            return false;
+      }
+
+      return false;
    }
 
 }
