@@ -1,6 +1,9 @@
 package model;
 
+import globalvar.StructDefinitionElements;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -9,14 +12,22 @@ import java.util.ArrayList;
  * @author Alexandru
  *
  */
-public class ResponseQA {
+public class ResponseQA implements StructDefinitionElements {
 
 	private ArrayList<String> answers;
 	private String question;
+	private HashMap<String, Boolean> property;
 	public ResponseQA(ArrayList<String> answers, String question) {
 		super();
 		this.answers = answers;
 		this.question = question;
+		this.property.put(PERSON, false);
+		this.property.put(QUESTION, false);
+		this.property.put(SURVEY, false);
+		this.property.put(GENERAL, false);
+		this.property.put(INSTANCE, false);
+		this.property.put(SGD, false);
+		this.property.put(OTHER, false);
 	}
 	public ArrayList<String> getAnswers() {
 		return answers;
@@ -29,6 +40,12 @@ public class ResponseQA {
 	}
 	public void setQuestion(String question) {
 		this.question = question;
+	}
+	public boolean getProperty(String key) {
+		return property.get(key);
+	}
+	public void setProperty(String key, boolean value) {
+		this.property.put(key, value);
 	}
 	@Override
 	public int hashCode() {

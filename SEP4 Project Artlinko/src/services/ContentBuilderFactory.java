@@ -1,5 +1,9 @@
 package services;
 
+import java.util.ArrayList;
+
+import model.ResponseQA;
+
 
 /**
  * Implementation for building all the elements fetched from surveys
@@ -10,9 +14,9 @@ public class ContentBuilderFactory implements I_ContentBuilder
 {
 
 	@Override
-	public void buildResponseQA() {
-		// TODO Auto-generated method stub
+	public ResponseQA buildResponseQA(ArrayList<String> answers, String question) {
 		
+		return new ResponseQA(answers, question);
 	}
 
 }

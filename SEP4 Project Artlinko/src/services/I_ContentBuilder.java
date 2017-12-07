@@ -1,5 +1,9 @@
 package services;
 
+import java.util.ArrayList;
+
+import model.ResponseQA;
+
 
 /**
  * 
@@ -9,6 +13,6 @@ package services;
  */
 public interface I_ContentBuilder {
 
-	public void buildResponseQA();
+	public ResponseQA buildResponseQA(ArrayList<String> answers, String question);
 	
 }

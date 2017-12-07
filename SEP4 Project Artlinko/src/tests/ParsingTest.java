@@ -3,15 +3,15 @@ package tests;
 
 
 import static org.junit.Assert.*;
+import globalvar.GlobalVar;
 
 import java.util.List;
 
 import org.junit.Test;
 
 import services.CSVHelper;
-import services.TestingVariables;
 
-public class ParsingTest implements TestingVariables
+public class ParsingTest implements GlobalVar
 {
 
    String elem1 = "Response ID";
