@@ -113,29 +113,29 @@ public class CSVHelper implements TestingVariables
     }
  
     
-//   // LIGHT TEST 
-//    public static void main(String  [] args){
-//    	CSVHelper testobj = new CSVHelper();
-//    	List<List<String>> list= null;
-//    	try {
-//    		list = testobj.readData(TESTPATH);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-////    	System.out.println(list.get(0));
-//    	
-//    	
-//    	
-//  
-//  
-//    		for(String el: list.get(0)){
-//    			System.out.println(el);
-//    		}
-//    	
-//    	
-//    }
-//    
+   // LIGHT TEST 
+    public static void main(String  [] args){
+    	CSVHelper testobj = new CSVHelper();
+    	List<List<String>> list= null;
+    	try {
+    		list = testobj.readData(TESTPATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//    	System.out.println(list.get(0));
+    	
+    	
+    	
+  
+  
+    		for(String el: list.get(0)){
+    			System.out.println(el);
+    		}
+    	
+    	
+    }
+    
     
     
 }

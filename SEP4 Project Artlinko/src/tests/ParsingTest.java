@@ -9,8 +9,9 @@ import java.util.List;
 import org.junit.Test;
 
 import services.CSVHelper;
+import services.TestingVariables;
 
-public class ParsingTest
+public class ParsingTest implements TestingVariables
 {
 
    String elem1 = "Response ID";
@@ -18,7 +19,6 @@ public class ParsingTest
    int numbOfRows = 501;
    CSVHelper testobj = new CSVHelper();
    List<List<String>> list = null;
-   public final String TESTPATH = "C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv";
 
    
    
