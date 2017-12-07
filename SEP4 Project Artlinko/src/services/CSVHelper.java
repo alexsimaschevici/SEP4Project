@@ -29,7 +29,7 @@ public class CSVHelper implements GlobalVar
      * @return
      * @throws Exception
      */
-    public static List<String> parseLine(Reader r) throws Exception {
+    public List<String> parseLine(Reader r) throws Exception {
         int ch = r.read();
         while (ch == '\r') {
             ch = r.read();
@@ -87,16 +87,16 @@ public class CSVHelper implements GlobalVar
      * @return
      * @throws Exception
      */
-    public static List<List<String>> readData(String filePath) throws Exception {
+    public List<List<String>> readData(String filePath) throws Exception {
         List<List<String>> collection = new Vector<List<String>>();
         File fileTemplate = new File(filePath);
         FileInputStream fis = new FileInputStream(fileTemplate);
         Reader fr = new InputStreamReader(fis, "UTF-8");
      
-        List<String> values = CSVHelper.parseLine(fr);
+        List<String> values = parseLine(fr);
         while (values!=null) {
             collection.add( values);
-            values = CSVHelper.parseLine(fr);
+            values = parseLine(fr);
         }
         fr.close();
         return collection;
@@ -110,10 +110,23 @@ public class CSVHelper implements GlobalVar
      * @param list
      * @return
      */
-    public static List<String> getSurveyStructure(List<List<String>> list){
+    public List<String> getSurveyStructure(List<List<String>> list){
     	return list.get(0);
     }
  
+    
+    
+    public List<List<String>> readSurveys(){
+    	List<List<String>> list= null;
+    	try {
+    		list = readData(TESTPATH);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return list;
+    }
+    
     
 //   // LIGHT TEST 
 //    public static void main(String  [] args){

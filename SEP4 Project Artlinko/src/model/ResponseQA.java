@@ -21,6 +21,7 @@ public class ResponseQA implements StructDefinitionElements {
 		super();
 		this.answers = answers;
 		this.question = question;
+		property= new HashMap<String, Boolean>() ;
 		this.property.put(PERSON, false);
 		this.property.put(QUESTION, false);
 		this.property.put(SURVEY, false);

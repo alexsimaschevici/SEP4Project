@@ -1,9 +1,14 @@
 package view;
 
+import globalvar.GlobalVar;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 
-public class View{
+public class View implements GlobalVar{
 
 	
 	Calendar cal;
@@ -24,6 +29,38 @@ public class View{
 	    int second = cal.get(Calendar.SECOND);
 		System.out.printf("Log [%4d/%02d/%02d %02d:%02d:%02d] %s \n" ,  // Pad with zero
           year, month+1, day, hour, minute, second, msg);
+	}
+
+
+	public HashMap<String, ArrayList<Boolean>> getTypesAssigned(List<String> structure) {
+		// TODO Auto-generated method stub
+
+		HashMap<String, ArrayList<Boolean>> prepCollection = new HashMap<String, ArrayList<Boolean>>();
+		
+		for (int j=0; j<structure.size(); j++){
+			
+			ArrayList<Boolean> tempBool = new ArrayList<Boolean>();
+			if (j < 20)
+				for (int i = 0; i < 6; i++) {
+					if (i == 0)
+						tempBool.add(true);
+					else
+						tempBool.add(false);
+				}
+
+			else
+				for (int i = 0; i < 6; i++) {
+					if (i == 1)
+						tempBool.add(true);
+					else if (i == 3)
+						tempBool.add(true);
+
+					else
+						tempBool.add(false);
+				}
+			prepCollection.put(structure.get(j), tempBool);
+	}
+		return prepCollection;
 	}
 	
 }
