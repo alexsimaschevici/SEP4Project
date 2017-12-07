@@ -1,7 +1,5 @@
 package tests;
 
-
-
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -9,30 +7,27 @@ import java.util.List;
 import org.junit.Test;
 
 import services.CSVHelper;
+import services.TestingVariables;
 
-public class ParsingTest
+public class ParsingTest implements TestingVariables
 {
 
    String elem1 = "Response ID";
    String elem2 = "Panel Company Redirect (Completed)";
    int numbOfRows = 501;
-   CSVHelper testobj = new CSVHelper();
    List<List<String>> list = null;
-   public final String TESTPATH = "C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv";
 
-   
-   
    /**
-    * We're using boundary testing, where we perform a horizontal check,
-    * with the first and last name of the columns,
-    * as well as the total number of rows - responses PLUS the column names  
+    * We're using boundary testing, where we perform a horizontal check, with
+    * the first and last name of the columns, as well as the total number of
+    * rows - responses plus the column names
     */
    @Test
    public void fetchFirstColNameTest()
    {
       try
       {
-         list = testobj.readData(TESTPATH);
+         list = CSVHelper.readData(TESTPATH);
       }
       catch (Exception e)
       {
@@ -42,27 +37,29 @@ public class ParsingTest
 
       assertEquals(elem1, result);
    }
-   
+
    @Test
-   public void fetchLastColNameTest() {
+   public void fetchLastColNameTest()
+   {
       try
       {
-         list = testobj.readData(TESTPATH);
+         list = CSVHELPER.readData(TESTPATH);
       }
       catch (Exception e)
       {
          e.printStackTrace();
       }
-      String result = list.get(0).get(list.get(0).size()-1);
+      String result = list.get(0).get(list.get(0).size() - 1);
 
       assertEquals(elem2, result);
    }
-   
+
    @Test
-   public void checkNumbOfRows(){
+   public void checkNumbOfRows()
+   {
       try
       {
-         list = testobj.readData(TESTPATH);
+         list = CSVHELPER.readData(TESTPATH);
       }
       catch (Exception e)
       {
