@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 
@@ -13,31 +14,34 @@ import java.util.HashMap;
  */
 public class SurveyResponsesCollection {
 
-	HashMap<String, ResponseQA> surveyResp;
+	List<ResponseQA> surveyResp;
 
 	public SurveyResponsesCollection() {
 		super();
-		this.surveyResp = new HashMap<String,ResponseQA>();
+		this.surveyResp = new ArrayList<ResponseQA>();
 	}
 
-	public HashMap<String,ResponseQA> getSurveys() {
+	public List<ResponseQA> getSurveys() {
 		return surveyResp;
 	}
 
-	public void setSurveys(HashMap<String,ResponseQA> surveys) {
+	public void setSurveys(List<ResponseQA> surveys) {
 		this.surveyResp = surveys;
 	}
 	
-	public void addSurvey(ResponseQA oneResp){
-		surveyResp.put(oneResp.getQuestion(), oneResp);
+	public void addSurvey(ResponseQA oneResp, int row){
+		surveyResp.add(oneResp);
 	}
 	
 	
-	public ResponseQA getSurvey(String key){
-		return surveyResp.get(key);
+	public ResponseQA getSurvey(int pos){
+		return surveyResp.get(pos);
 	}
+
 	
-	
+	public int size(){
+		return surveyResp.size();
+	}
 	
 	
 	
