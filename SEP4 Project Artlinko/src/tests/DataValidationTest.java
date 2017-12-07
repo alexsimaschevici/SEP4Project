@@ -13,8 +13,8 @@ import services.DataValidator;
 public class DataValidationTest
 {
    ArrayList<String> answers = new ArrayList<>();
-   boolean validated1 = true;
-   boolean validated2 = true; 
+   boolean valid = true;
+   boolean invalid = true; 
    DataValidator dv = new DataValidator();
 
    @Test
@@ -24,7 +24,7 @@ public class DataValidationTest
       answers.add("-12");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?"); 
       boolean result = dv.isDouble(res);
-      assertEquals(validated1, result);
+      assertEquals(valid, result);
    }
    
    @Test
@@ -34,7 +34,17 @@ public class DataValidationTest
       answers.add("-12");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?"); 
       boolean result = dv.isRange(res);
-      assertEquals(validated2, result);
+      assertEquals(valid, result);
    }
 
+   @Test
+   public void longValidation()
+   {
+      answers.add("13225");
+      answers.add("-12.3");
+      ResponseQA res = new ResponseQA(answers, "What's the temperature?"); 
+      boolean result = dv.isLong(res);
+      assertEquals(valid, result);
+   }
+   
 }

@@ -39,5 +39,21 @@ public class DataValidator
       else
          return true;
    }
+   
+   public boolean isLong(ResponseQA response){
+      
+      String str = response.getAnswers().get(0);
+
+      try
+      {
+         long l = Long.parseLong(str);
+      }
+      catch (NumberFormatException nfe)
+      {
+         return false;
+      }
+      return true;
+    
+   }
 
 }
