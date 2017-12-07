@@ -16,7 +16,7 @@ public class ResponseQA implements StructDefinitionElements {
 
 	private ArrayList<String> answers;
 	private String question;
-	private HashMap<String, Boolean> property;
+	private HashMap<String, Boolean> property = new HashMap<>();
 	public ResponseQA(ArrayList<String> answers, String question) {
 		super();
 		this.answers = answers;
