@@ -65,5 +65,13 @@ public class DataValidationTest
       ArrayList<Long> result = dv.returnCurrValues(res);
       assertEquals(valueList, result);
    }
+   
+   @Test
+   public void isSGDValidation(){
+      answers.add("Strongly Agree");
+      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
+      boolean result = dv.isSGD(res);
+      assertEquals(valid, result);
+   }
 
 }

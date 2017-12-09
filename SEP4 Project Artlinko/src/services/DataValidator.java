@@ -28,6 +28,15 @@ public class DataValidator implements GlobalVar
 
    }
 
+   // checks if the ResponseQA is an SGD question-response
+   public boolean isSGD(ResponseQA response){
+      
+      String str = response.getAnswers().get(0); 
+      str = str.toLowerCase(); 
+      return (str.contains("agree") || str.contains("neutral"));
+   }
+   
+   
    // checks if the first element of the answer from a given RsponseQA object is
    // a range
    public boolean isRange(ResponseQA response)
@@ -155,9 +164,9 @@ public class DataValidator implements GlobalVar
    {
       ArrayList<String> answers = new ArrayList<>();
       DataValidator dv = new DataValidator();
-      answers.add("$70,000 - $100,000");
+      answers.add("Strongly Agree");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      System.out.println(dv.isRange(res));
+      System.out.println(dv.isSGD(res));
       
    }
   
