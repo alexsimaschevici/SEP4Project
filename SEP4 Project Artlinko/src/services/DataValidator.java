@@ -155,9 +155,10 @@ public class DataValidator implements GlobalVar
    {
       ArrayList<String> answers = new ArrayList<>();
       DataValidator dv = new DataValidator();
-      answers.add("$70,000- $100,000");
+      answers.add("$70,000 - $100,000");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?");
       System.out.println(dv.isRange(res));
+      
    }
-
+  
 }
