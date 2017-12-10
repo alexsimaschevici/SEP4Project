@@ -55,7 +55,7 @@ public class SurveyResponsesCollection {
 	}
 	
 	//TO BE IMPLEMENTED
-	public List<ResponseQA> getByType(ArrayList<String> types){
+	public List<ResponseQA> getByProperty(HashMap<String, Boolean> properties){
 		return null;
 	}
 	
