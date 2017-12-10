@@ -74,4 +74,14 @@ public class DataValidationTest
       assertEquals(valid, result);
    }
 
+   
+   @Test
+   public void isOtherQAValidation(){
+      answers.add("");
+      answers.add("");
+      answers.add("Other - Write in (Required)");
+      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
+      boolean result = dv.isOtherQA(res);
+      assertEquals(valid, result);
+   }
 }

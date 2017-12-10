@@ -3,6 +3,7 @@ package services;
 import globalvar.GlobalVar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.ResponseQA;
 
@@ -29,14 +30,46 @@ public class DataValidator implements GlobalVar
    }
 
    // checks if the ResponseQA is an SGD question-response
-   public boolean isSGD(ResponseQA response){
-      
-      String str = response.getAnswers().get(0); 
-      str = str.toLowerCase(); 
+   public boolean isSGD(ResponseQA response)
+   {
+
+      String str = response.getAnswers().get(0);
+      str = str.toLowerCase();
       return (str.contains("agree") || str.contains("neutral"));
    }
+
+   // checks if the answers to the ResponseQA are of format "Other - Write in (Required)"
+   public boolean isOtherQA(ResponseQA response)
+   {
+      boolean valid = false;
+      String str = "";
+      for (int i = 0; i < response.getAnswers().size(); i++)
+      {
+         str = response.getAnswers().get(i);
+         str = str.toLowerCase();
+         if (str.contains("other - write in (required)"))
+
+            valid = true;
+         else
+            valid = false;
+      }
+      return valid;
+   }
    
-   
+   // a method for dealing with the "other" columns 
+   public void cleanOtherCol(ResponseQA response){
+      List<String> columnList = CSVHELPER.readSurveys().get(0);
+      
+      if (isOtherQA(response)){
+         for (String elem : columnList){
+            if(response.getQuestion().equals(elem)){
+               //replace the answers or delete the first ResponseQA ? 
+            }
+         }
+      }
+      
+   }
+
    // checks if the first element of the answer from a given RsponseQA object is
    // a range
    public boolean isRange(ResponseQA response)
@@ -164,10 +197,14 @@ public class DataValidator implements GlobalVar
    {
       ArrayList<String> answers = new ArrayList<>();
       DataValidator dv = new DataValidator();
-      answers.add("Strongly Agree");
+      answers.add("");
+      answers.add("");
+      answers.add("Other - Write in (Required)");
       ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      System.out.println(dv.isSGD(res));
+      System.out.println(dv.isOtherQA(res));
       
+      System.out.println(dv.cleanOtherCol());
+
    }
-  
+
 }
