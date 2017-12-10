@@ -2,7 +2,7 @@ package services;
 
 import java.util.UUID;
 
-public class IDGenerator {
+public class IDGen {
 
 	public static String generateId()
 	{

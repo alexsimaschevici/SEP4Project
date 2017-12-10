@@ -19,9 +19,6 @@ public class SurveyResponsesCollection {
 	public SurveyResponsesCollection() {
 		super();
 		this.surveyResp = new ArrayList<ResponseQA>();
-		
-		
-		/// WE SHOULD HAVE A ROW COLLECTION
 	}
 
 	public List<ResponseQA> getSurveys() {
@@ -44,6 +41,17 @@ public class SurveyResponsesCollection {
 	
 	public int size(){
 		return surveyResp.size();
+	}
+	
+	//TO BE IMPLEMENTED
+	public List<ResponseQA> getColumn(String questionID){
+		return null;
+	}
+	
+	
+	//TO BE IMPLEMENTED
+	public List<ResponseQA> getRow(String surveyInstanceID){
+		return null;
 	}
 	
 	

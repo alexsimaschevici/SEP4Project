@@ -36,6 +36,9 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		// build objects from of all data and place them in allResponses
 		// collection
 
+		List<ResponseQA> extract= allResponses.getSurveys();
+		List<ResponseQA> filter = extract.Where(id=> id="121").ToList();
+		 
 		this.structure = CSVHELPER.getSurveyStructure(allData);
 		allData.remove(0);
 		int count = 0;
@@ -53,7 +56,8 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 					// System.out.println(structure.get(i)+" || "+subList.get(i)+"");
 				}
 				allResponses.addSurvey(
-						new ResponseQA(answers, structure.get(i)), count);
+						new ResponseQA(answers, structure.get(i))
+						, count);
 
 			}
 			// System.out.println("\n\n");
@@ -78,7 +82,13 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		//System.exit(0);
 	
 	}
-
+	
+	
+	//Using the structure of the survey assign new Id to evey colomn
+	public void assignSurveyId(){
+		
+	}
+	
 	
 	///TEST OUTPUT SURVEYS
 	public void displaySurveys() {
