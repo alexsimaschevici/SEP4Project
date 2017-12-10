@@ -54,6 +54,10 @@ public class SurveyResponsesCollection {
 		return null;
 	}
 	
+	//TO BE IMPLEMENTED
+	public List<ResponseQA> getByType(ArrayList<String> types){
+		return null;
+	}
 	
 	
 }
