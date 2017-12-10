@@ -56,14 +56,16 @@ public class DataValidator implements GlobalVar
       return valid;
    }
    
-   // a method for dealing with the "other" columns 
+  
+   
+   // a method for dealing with the "other" columns ????
    public void cleanOtherCol(ResponseQA response){
       List<String> columnList = CSVHELPER.readSurveys().get(0);
       
       if (isOtherQA(response)){
          for (String elem : columnList){
             if(response.getQuestion().equals(elem)){
-               //replace the answers or delete the first ResponseQA ? 
+               //replace the answers or delete the first ResponseQA column? 
             }
          }
       }
@@ -203,7 +205,7 @@ public class DataValidator implements GlobalVar
       ResponseQA res = new ResponseQA(answers, "What's the temperature?");
       System.out.println(dv.isOtherQA(res));
       
-      System.out.println(dv.cleanOtherCol());
+      
 
    }
 
