@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import controller.SystemController;
+
 
 public class View implements GlobalVar{
 
@@ -32,16 +34,16 @@ public class View implements GlobalVar{
 	}
 
 
-	public HashMap<String, ArrayList<Boolean>> getTypesAssigned(List<String> structure) {
+	public List<ArrayList<Boolean>> getTypesAssigned(List<String> structure) {
 		// TODO Auto-generated method stub
 
-		HashMap<String, ArrayList<Boolean>> prepCollection = new HashMap<String, ArrayList<Boolean>>();
+		List<ArrayList<Boolean>> prepCollection = new ArrayList<ArrayList<Boolean>>();
 		
 		for (int j=0; j<structure.size(); j++){
 			
 			ArrayList<Boolean> tempBool = new ArrayList<Boolean>();
 			if (j < 20)
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 7; i++) {
 					if (i == 0)
 						tempBool.add(true);
 					else
@@ -49,7 +51,7 @@ public class View implements GlobalVar{
 				}
 
 			else
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 7; i++) {
 					if (i == 1)
 						tempBool.add(true);
 					else if (i == 3)
@@ -58,10 +60,12 @@ public class View implements GlobalVar{
 					else
 						tempBool.add(false);
 				}
-			prepCollection.put(structure.get(j), tempBool);
+			prepCollection.add(tempBool);
 	}
 		return prepCollection;
 	}
+	
+
 	
 }
 

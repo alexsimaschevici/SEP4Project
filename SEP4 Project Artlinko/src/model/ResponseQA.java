@@ -16,7 +16,21 @@ public class ResponseQA implements StructDefinitionElements {
 
 	private ArrayList<String> answers;
 	private String question;
-	private HashMap<String, Boolean> property = new HashMap<>();
+	public HashMap<String, Boolean> property;
+	//NEEDS TO BE INTEGRATED
+	public String dimension;
+	//NEEDS TO BE INTEGRATED
+	//this defines in which row is the q and a placed
+	public String surveyInstanceID;
+	
+	//this defines the question id for the whole column
+	public String questionID;
+	
+	//this defines the question answer combination
+	public String answerID;
+	
+	
+	
 	public ResponseQA(ArrayList<String> answers, String question) {
 		super();
 		this.answers = answers;
@@ -29,6 +43,8 @@ public class ResponseQA implements StructDefinitionElements {
 		this.property.put(INSTANCE, false);
 		this.property.put(SGD, false);
 		this.property.put(OTHER, false);
+		
+		
 	}
 	public ArrayList<String> getAnswers() {
 		return answers;

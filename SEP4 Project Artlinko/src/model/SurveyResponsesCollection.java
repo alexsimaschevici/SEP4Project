@@ -19,6 +19,9 @@ public class SurveyResponsesCollection {
 	public SurveyResponsesCollection() {
 		super();
 		this.surveyResp = new ArrayList<ResponseQA>();
+		
+		
+		/// WE SHOULD HAVE A ROW COLLECTION
 	}
 
 	public List<ResponseQA> getSurveys() {

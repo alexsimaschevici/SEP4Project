@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import globalvar.GlobalVar;
+import globalvar.StructDefinitionElements;
 import view.View;
 import model.ResponseQA;
 import model.SurveyResponsesCollection;
@@ -15,7 +16,7 @@ import model.SurveyResponsesCollection;
  * @author Alexandru
  *
  */
-public class SystemController implements GlobalVar {
+public class SystemController implements GlobalVar, StructDefinitionElements {
 
 	private View view;
 	private List<String> structure = null;
@@ -61,16 +62,40 @@ public class SystemController implements GlobalVar {
 
 		// assign types to e
 
-		// HashMap<String, ArrayList<Boolean>> typesAssigned =
-		// view.getTypesAssigned(structure);
-
+		 List<ArrayList<Boolean>>  typesAssigned =
+		 view.getTypesAssigned(structure);
+		 count=0;
+		 for(int i=0; i<structure.size(); i++)
+		 {
+			  for(int j=0; j<7; j++){
+			 	this.allResponses.getSurveys().get(i).setProperty(TYPES[j], typesAssigned.get(i).get(j));
+				//System.out.println(TYPES[j] +" "+ typesAssigned.get(i).get(j));
+		//	 	System.out.println(this.allResponses.getSurveys().get(i).getProperty(TYPES[j]));
+//				System.out.println("count: "+i+"| j:"+j);
+//				System.out.println("comp size: "+ typesAssigned.size());
+			}		 
+		 }
+		//System.exit(0);
+	
 	}
 
+	
+	///TEST OUTPUT SURVEYS
 	public void displaySurveys() {
 		int count = 0;
-		List<ResponseQA> temp = allResponses.getSurveys();
-		for (ResponseQA item : temp) {
-			view.printLog(item.getQuestion() + " || "
+		for (int i=0; i<allResponses.getSurveys().size(); i++) {
+			ResponseQA item= allResponses.getSurveys().get(i);
+			System.out.println(" "+
+					//PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER
+					count+"  "+ 
+					item.getProperty(PERSON)+" "+
+					item.getProperty(QUESTION)+" "+
+					item.getProperty(SURVEY)+" "+
+					item.getProperty(GENERAL)+" "+
+					item.getProperty(INSTANCE)+" "+
+					item.getProperty(SGD)+" "+
+					item.getProperty(OTHER)+" "+
+					" || "+item.getQuestion() + " || "
 					+ item.getAnswers().get(0));
 			
 			count++;
@@ -80,9 +105,10 @@ public class SystemController implements GlobalVar {
 			}
 		}
 
-		System.out.println("\n\n");
+		System.out.println(allResponses.getSurveys().get(0).getProperty(PERSON));
 	}
 
+	//TEST MAIN
 	public static void main(String[] args) {
 		SystemController controller = new SystemController();
 
