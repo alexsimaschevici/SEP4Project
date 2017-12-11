@@ -1,16 +1,18 @@
 package view;
 
 import globalvar.GlobalVar;
+import globalvar.StructDefinitionElements;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import model.SurveyResponsesCollection;
 import controller.SystemController;
 
 
-public class View implements GlobalVar{
+public class View implements GlobalVar, StructDefinitionElements{
 
 	
 	Calendar cal;
@@ -34,35 +36,18 @@ public class View implements GlobalVar{
 	}
 
 
-	public List<ArrayList<Boolean>> getTypesAssigned(List<String> structure) {
+	public void getTypesAssigned(List<String> structure,
+			SurveyResponsesCollection allResponses) {
 		// TODO Auto-generated method stub
-
-		List<ArrayList<Boolean>> prepCollection = new ArrayList<ArrayList<Boolean>>();
 		
-		for (int j=0; j<structure.size(); j++){
-			
-			ArrayList<Boolean> tempBool = new ArrayList<Boolean>();
+		for (int j=0; j<allResponses.size(); j++){
 			if (j < 20)
-				for (int i = 0; i < 7; i++) {
-					if (i == 0)
-						tempBool.add(true);
-					else
-						tempBool.add(false);
-				}
-
-			else
-				for (int i = 0; i < 7; i++) {
-					if (i == 1)
-						tempBool.add(true);
-					else if (i == 3)
-						tempBool.add(true);
-
-					else
-						tempBool.add(false);
-				}
-			prepCollection.add(tempBool);
+			allResponses.getSurvey(j).setProperty(PERSON, true);
+			else{
+				allResponses.getSurvey(j).setProperty(SURVEY, true);
+				allResponses.getSurvey(j).setProperty(GENERAL, true);
+			}	
 	}
-		return prepCollection;
 	}
 	
 

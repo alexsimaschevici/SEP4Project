@@ -6,6 +6,8 @@ import java.util.List;
 
 import globalvar.GlobalVar;
 import globalvar.StructDefinitionElements;
+import services.DataValidator;
+import services.IDGen;
 import view.View;
 import model.ResponseQA;
 import model.SurveyResponsesCollection;
@@ -33,90 +35,59 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		// read all data from file
 		allData = CSVHELPER.readSurveys();
 
-		// build objects from of all data and place them in allResponses
-		// collection
-
-		List<ResponseQA> extract= allResponses.getSurveys();
-		List<ResponseQA> filter = extract.Where(id=> id="121").ToList();
-		 
+		// retrieve structure and remove from extract 
 		this.structure = CSVHELPER.getSurveyStructure(allData);
-		allData.remove(0);
+		allData.remove(0);	
+		
+		//Assign extract all id
+		String entireSurveyID = IDGen.generateId();
+		
+		//Assign ids to all question of the structure
+		List<String> strucureIdCollection = IDGen.assignIdToStruct(structure);
+		
+		// Process data into ResponseQA objects
 		int count = 0;
 		for (List<String> subList : allData) {
-			for (int i = 0; i < subList.size(); i++) {
+			String surveyInstaceID = IDGen.generateId();	
+ 			for (int i = 0; i < subList.size(); i++) {
 				ArrayList<String> answers = new ArrayList<String>();
-
-				// /VALIDATION OF ASNSWERS SHOULD OCCURE HERE
-
-				if (subList.get(i).equals("")) {
-					answers.add("n/a");
-					// System.out.println(structure.get(i)+" || n/a");
-				} else {
-					answers.add(subList.get(i));
-					// System.out.println(structure.get(i)+" || "+subList.get(i)+"");
-				}
+				
+				// Response validator
+				DataValidator.fixEmptyResponses(answers, subList.get(i));				
+				
+				//Finalize and add to all responses
 				allResponses.addSurvey(
-						new ResponseQA(answers, structure.get(i))
-						, count);
-
+						new ResponseQA(answers, structure.get(i),
+								strucureIdCollection.get(i),
+								surveyInstaceID, entireSurveyID), count);
 			}
-			// System.out.println("\n\n");
 			count++;
 		}
 
 		// assign types to e
-
-		 List<ArrayList<Boolean>>  typesAssigned =
-		 view.getTypesAssigned(structure);
-		 count=0;
-		 for(int i=0; i<structure.size(); i++)
-		 {
-			  for(int j=0; j<7; j++){
-			 	this.allResponses.getSurveys().get(i).setProperty(TYPES[j], typesAssigned.get(i).get(j));
-				//System.out.println(TYPES[j] +" "+ typesAssigned.get(i).get(j));
-		//	 	System.out.println(this.allResponses.getSurveys().get(i).getProperty(TYPES[j]));
-//				System.out.println("count: "+i+"| j:"+j);
-//				System.out.println("comp size: "+ typesAssigned.size());
-			}		 
-		 }
-		//System.exit(0);
-	
+		view.getTypesAssigned(structure,allResponses);
 	}
-	
-	
-	//Using the structure of the survey assign new Id to evey colomn
-	public void assignSurveyId(){
-		
-	}
-	
 	
 	///TEST OUTPUT SURVEYS
 	public void displaySurveys() {
-		int count = 0;
-		for (int i=0; i<allResponses.getSurveys().size(); i++) {
-			ResponseQA item= allResponses.getSurveys().get(i);
-			System.out.println(" "+
-					//PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER
-					count+"  "+ 
-					item.getProperty(PERSON)+" "+
-					item.getProperty(QUESTION)+" "+
-					item.getProperty(SURVEY)+" "+
-					item.getProperty(GENERAL)+" "+
-					item.getProperty(INSTANCE)+" "+
-					item.getProperty(SGD)+" "+
-					item.getProperty(OTHER)+" "+
-					" || "+item.getQuestion() + " || "
-					+ item.getAnswers().get(0));
-			
+		int count=0;
+		for (int i=0; i<allResponses.size(); i++) {
+			if(count==0)
+			System.out.println(allResponses.getSurvey(i).getQuestion());
 			count++;
 			if(count>=structure.size()){
-			System.out.println("\n\n");
 			count=0;
+			System.exit(0);
 			}
+//			if(count==0)
+//				System.out.println(allResponses.getSurvey(i).toString());
+//			count++;
+//			if(count>=structure.size()){
+//			count=0;
+//			}
 		}
-
-		System.out.println(allResponses.getSurveys().get(0).getProperty(PERSON));
 	}
+	
 
 	//TEST MAIN
 	public static void main(String[] args) {

@@ -91,6 +91,16 @@ public class ResponseQA implements StructDefinitionElements {
 		return answerID;
 	}
 	
+	
+	
+	@Override
+	public String toString() {
+		return "ResponseQA [answers=" + answers + ", question=" + question
+				+ ", property=" + property + ", dimension=" + dimension
+				+ ", surveyInstanceID=" + surveyInstanceID + ", questionID="
+				+ questionID + ", answerID=" + answerID + ", entireSurveyID="
+				+ entireSurveyID + "]";
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
