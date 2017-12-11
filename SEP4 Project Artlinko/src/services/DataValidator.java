@@ -7,6 +7,10 @@ import java.util.List;
 
 import model.ResponseQA;
 
+/**
+ * @author Alexandru, Cristian
+ *
+ */
 public class DataValidator implements GlobalVar
 {
 
@@ -193,6 +197,11 @@ public class DataValidator implements GlobalVar
    }
    
    
+	/**
+	 * This method fills in n/a where there is no answer present
+	 * @param answers
+	 * @param r
+	 */
 	public static void fixEmptyResponses(ArrayList<String> answers, String r){
 		if (r.equals("")) {
 			answers.add("n/a");
