@@ -18,7 +18,7 @@ public class DataValidator implements GlobalVar
       boolean flag = false;
       for (String elem : response.getAnswers())
       {
-         if (elem.isEmpty() || elem.equalsIgnoreCase(" "))
+         if (elem.isEmpty() || elem.equalsIgnoreCase("n/a"))
             i++;
          else
          {
@@ -174,7 +174,7 @@ public class DataValidator implements GlobalVar
       boolean flag = false;
       for (String elem : response.getAnswers())
       {
-         if (elem.isEmpty() || elem.equalsIgnoreCase(" "))
+         if (elem.isEmpty() || elem.equalsIgnoreCase("n/a"))
             i++;
          else
          {
