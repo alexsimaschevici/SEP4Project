@@ -143,6 +143,11 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		}
 	}
 	
+	//TEST RETURN READING RESULTS TO BE CHECKED
+	public SurveyResponsesCollection getAllResponsesCollection(){
+	return allResponses;
+	}
+	
 
 	//TEST MAIN
 	public static void main(String[] args) {
