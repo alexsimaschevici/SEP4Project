@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.*;
+import globalvar.GlobalVar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import org.junit.Test;
 
 import services.DataValidator;
 
-public class DataValidationTest
+public class DataValidationTest implements GlobalVar
 {
    ArrayList<String> answers = new ArrayList<>();
    boolean valid = true;
@@ -19,8 +20,8 @@ public class DataValidationTest
    ArrayList<Long> valueList = new ArrayList<Long>()
    {
       {
-         add((long) 0.0);
-         add((long) 70000);
+         add((long) 100000);
+         add((long) 150000);
 
       }
    };;
@@ -32,46 +33,45 @@ public class DataValidationTest
    {
       answers.add("-12.5");
       answers.add("-12");
-      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      boolean result = dv.isDouble(res);
-      assertEquals(valid, result);
+  //    ResponseQA res = new ResponseQA(answers, "What's the temperature?");
+      boolean result = dv.isDouble(RESPQA);
+      assertEquals(invalid, result);
    }
 
    @Test
    public void rangeValidation()
    {
-      answers.add("11-18");
+      answers.add("18-24");
       answers.add("-12");
-      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      boolean result = dv.isRange(res);
+   //   ResponseQA res = new ResponseQA(answers, "What's your age?");
+      boolean result = dv.isRange(RESPQA);
       assertEquals(valid, result);
    }
 
    @Test
    public void longValidation()
    {
-      answers.add("13225");
       answers.add("-12.3");
-      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      boolean result = dv.isLong(res);
-      assertEquals(valid, result);
+    //  ResponseQA res = new ResponseQA(answers, "What's the temperature?");
+      boolean result = dv.isLong(RESPQA);
+      assertEquals(invalid, result);
    }
 
    @Test
    public void currValReturnValidation()
    {
       answers.add("under $70,000");
-      ResponseQA res = new ResponseQA(answers, "What's your salary?");
-      ArrayList<Long> result = dv.returnCurrValues(res);
+      //ResponseQA res = new ResponseQA(answers, "What's your salary?");
+      ArrayList<Long> result = dv.returnCurrValues(RESPQA);
       assertEquals(valueList, result);
    }
    
    @Test
    public void isSGDValidation(){
       answers.add("Strongly Agree");
-      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      boolean result = dv.isSGD(res);
-      assertEquals(valid, result);
+      //ResponseQA res = new ResponseQA(answers, "Do you agree?");
+      boolean result = dv.isSGD(RESPQA);
+      assertEquals(invalid, result);
    }
 
    
@@ -80,8 +80,8 @@ public class DataValidationTest
       answers.add("");
       answers.add("");
       answers.add("Other - Write in (Required)");
-      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      boolean result = dv.isOtherQA(res);
-      assertEquals(valid, result);
+      //ResponseQA res = new ResponseQA(answers, "What's the temperature?");
+      boolean result = dv.isOtherQA(RESPQA);
+      assertEquals(invalid, result);
    }
 }

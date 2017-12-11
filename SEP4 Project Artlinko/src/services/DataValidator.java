@@ -213,18 +213,18 @@ public class DataValidator implements GlobalVar
 	}
 
    // test
-//   public static void main(String[] args)
-//   {
-//      ArrayList<String> answers = new ArrayList<>();
-//      DataValidator dv = new DataValidator();
-//      answers.add("");
-//      answers.add("");
-//      answers.add("Other - Write in (Required)");
-//      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-//      System.out.println(dv.isOtherQA(res));
-//      
-//      System.out.println(dv.cleanOtherCol());
-//
-//   }
+   public static void main(String[] args)
+   {
+      ArrayList<String> answers = new ArrayList<>();
+      DataValidator dv = new DataValidator();
+      answers.add("");
+      answers.add("");
+      answers.add("Other - Write in (Required)");
+      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
+      System.out.println(dv.isOtherQA(res));
+      
+      System.out.println(dv.cleanOtherCol());
+
+   }
 
 }
