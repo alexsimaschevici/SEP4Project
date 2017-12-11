@@ -1,9 +1,9 @@
 package model;
 
-import globalvar.StructDefinitionElements;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import config.StructDefinitionElements;
 import services.*;
 
 /**

@@ -1,10 +1,9 @@
 package services;
 
-import globalvar.GlobalVar;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import config.GlobalVar;
 import model.ResponseQA;
 
 /**

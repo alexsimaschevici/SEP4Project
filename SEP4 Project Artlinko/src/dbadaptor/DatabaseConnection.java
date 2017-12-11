@@ -1,140 +1,64 @@
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
+package dbadaptor;
 
-public class DatabaseConnection {
-	
-	private String DBURL;
-	private String user;
-	private String password;
-	private Connection conn;
-	private static SQLTranslator translator;
-	private static DatabaseConnection instance;
-	
-	private DatabaseConnection() throws ClassNotFoundException
-	{
-		// JDBC driver name and database URL
-			DBURL = "jdbc:postgresql://localhost:5432/postgres";
 
-			//  Database credentials
-			user = "postgres";
-			password = "pass";
-			
-			//STEP 2: Register JDBC driver
-			Class.forName("org.postgresql.Driver");	
-			      
-			conn = null;
-			try{
-				//STEP 3: Open a connection
-				conn = DriverManager.getConnection(DBURL, user, password);
-			}catch (SQLException e) {
-				e.printStackTrace();
-			}
-	}
+/*   Main class. Handles creation and disposal of a connection to Oracle */
+/*   The individual case to be run is instantiated and passed the        */
+/*   connection                                                          */
+
+import java.io.FileNotFoundException;
+import java.sql.*;
+import java.util.GregorianCalendar;
+
+import config.DatabaseConnectionConfig;
+import oracle.jdbc.driver.OracleDriver;
+
+
+public class DatabaseConnection implements DatabaseConnectionConfig {
+
+	private static Connection conn;
+
+
+	/*
+	 * BUILDS A DATABASE CONNECTION TO AN ORACLE DATABASE
+	 */
 	
-	public static DatabaseConnection getInstance() throws ClassNotFoundException 
-	{
-		if(instance == null)
-		{
-			instance = new DatabaseConnection();
+	public static Connection requestConnection(){
+
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
+
+			conn = DriverManager.getConnection(connectString, userName, password);
+			conn.setAutoCommit(false);
+			System.out.println("connection established, autocommit off");
+
+
+		} catch (SQLException e) {
+			System.out.println("error establishing connection");
+			System.out.println("Connection string in use: "+connectString + "(user/pwd " + userName + "/" + password + ")" );
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+
 		}
-		return instance;
-	}
-	
-	public void performStatement(String statement)
-	{
-		 Statement stmt = null;
-		   try{
-		      stmt = conn.createStatement();
-		      stmt.executeUpdate(statement);
-		      } catch (SQLException e) {
-				e.printStackTrace();
-			}
-		   finally{
-			     //finally block used to close resources
-			     try{
-			         	if(stmt!=null)
-			            stmt.close();
-			        }catch(SQLException se2){}// nothing we can do
-		   } //end finally 	
-	}
-	
-	public String findID(String statement, String column_desired)
-	{
-		 Statement stmt = null;
-		   try{
-		      stmt = conn.createStatement();
-		      ResultSet rs = stmt.executeQuery(statement);
-		      //STEP 5: Extract data from result set
-		      String output = "";
 
-		      while(rs.next()){
-		         //Retrieve by column name
-							output += rs.getString(column_desired);
-		     }	
-		   		System.out.println("Resultant ID found: " + output);
-		   		return output;
-		      }
-		      catch(SQLException se){
-			      //Handle errors for JDBC
-			      se.printStackTrace();
-			   }catch(Exception e){
-			      //Handle errors for Class.forName
-			      e.printStackTrace();
-			   }
-		finally{
-			      //finally block used to close resources
-			      try{
-			    	  	if(stmt!=null)
-			            stmt.close();
-			      }catch(SQLException se2){}// nothing we can do
-			   } //end finally 
-			return "Error: ID Not Found";   	
+		return conn;
+		
 	}
 	
-	public String[] getColumnList(String table)
-	{
-		ArrayList<String> columns = new ArrayList<String>();
+	
+	public static void closeConnection(){
+		try {
+			conn.close();
+			System.out.println("connection closed");
 		
-		String sql = "SELECT column_name "
-				+ "FROM user_tab_cols "
-				+ "WHERE table_name = '" + table + "';";
-		
-		 Statement stmt = null;
-		   try{
-		      stmt = conn.createStatement();
-		      ResultSet rs = stmt.executeQuery(sql);
 
-		      		while(rs.next())
-		      		{
-		    	  		columns.add(rs.getString("column_name"));
-		      		}	
-		      }
-		      catch(SQLException se){
-			      //Handle errors for JDBC
-			      se.printStackTrace();
-			   }catch(Exception e){
-			      //Handle errors for Class.forName
-			      e.printStackTrace();
-			   }
-		finally{
-			      //finally block used to close resources
-			      try{
-			    	  	if(stmt!=null)
-			            stmt.close();
-			      }catch(SQLException se2){}// nothing we can do
-			   } //end finally 
-			 
-		String[] col_arr = new String[columns.size()];
-		
-		for(int i=0;i<col_arr.length;i++)
-		{
-			col_arr[i] = columns.get(i);
+		} catch (SQLException e) {
+			System.out.println("error closing connection");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(0);
+
 		}
-		
-		return col_arr;
 	}
+	
+	
 }

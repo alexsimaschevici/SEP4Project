@@ -1,6 +1,4 @@
 package services;
-import globalvar.GlobalVar;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -8,6 +6,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
 import java.util.Vector;
+
+import config.GlobalVar;
 
 
 

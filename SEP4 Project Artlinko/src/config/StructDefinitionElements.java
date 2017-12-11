@@ -1,4 +1,4 @@
-package globalvar;
+package config;
 
 
 

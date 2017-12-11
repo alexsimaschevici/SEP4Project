@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.Assert.*;
-import globalvar.GlobalVar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +9,7 @@ import model.ResponseQA;
 
 import org.junit.Test;
 
+import config.GlobalVar;
 import services.DataValidator;
 
 public class DataValidationTest implements GlobalVar

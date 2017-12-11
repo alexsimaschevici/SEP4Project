@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import globalvar.GlobalVar;
-import globalvar.StructDefinitionElements;
+import config.GlobalVar;
+import config.StructDefinitionElements;
 import services.DataValidator;
 import services.IDGen;
 import view.View;
