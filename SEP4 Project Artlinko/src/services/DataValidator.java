@@ -10,22 +10,30 @@ import model.ResponseQA;
 public class DataValidator implements GlobalVar
 {
 
-   // checks if the first element of the answer from a given RsponseQA object is
-   // a double
+   // checks if the first element of the answer from a given RsponseQA 
+   // that's not empty is a double
    public boolean isDouble(ResponseQA response)
    {
-
-      String str = response.getAnswers().get(0);
-
-      try
+      int i = 0;
+      boolean flag = false;
+      for (String elem : response.getAnswers())
       {
-         double d = Double.parseDouble(str);
+         if (elem.isEmpty() || elem.equalsIgnoreCase(" "))
+            i++;
+         else
+         {
+            try
+            {
+               double d = Double.parseDouble(response.getAnswers().get(i));
+               flag = true;
+            }
+            catch (NumberFormatException nfe)
+            {
+               flag = false;
+            }
+         }
       }
-      catch (NumberFormatException nfe)
-      {
-         return false;
-      }
-      return true;
+      return flag;
 
    }
 
@@ -38,7 +46,8 @@ public class DataValidator implements GlobalVar
       return (str.contains("agree") || str.contains("neutral"));
    }
 
-   // checks if the answers to the ResponseQA are of format "Other - Write in (Required)"
+   // checks if the answers to the ResponseQA are of format
+   // "Other - Write in (Required)"
    public boolean isOtherQA(ResponseQA response)
    {
       boolean valid = false;
@@ -55,21 +64,23 @@ public class DataValidator implements GlobalVar
       }
       return valid;
    }
-   
-  
-   
+
    // a method for dealing with the "other" columns ????
-   public void cleanOtherCol(ResponseQA response){
+   public void cleanOtherCol(ResponseQA response)
+   {
       List<String> columnList = CSVHELPER.readSurveys().get(0);
-      
-      if (isOtherQA(response)){
-         for (String elem : columnList){
-            if(response.getQuestion().equals(elem)){
-               //replace the answers or delete the first ResponseQA column? 
+
+      if (isOtherQA(response))
+      {
+         for (String elem : columnList)
+         {
+            if (response.getQuestion().equals(elem))
+            {
+               // replace the answers or delete the first ResponseQA column?
             }
          }
       }
-      
+
    }
 
    // checks if the first element of the answer from a given RsponseQA object is
@@ -155,23 +166,30 @@ public class DataValidator implements GlobalVar
       return values;
    }
 
-   // checks if the first element of the answer from a given RsponseQA object is
-   // a Long
-   public boolean isLong(ResponseQA response)
+   // checks if the first element of the answer from a given RsponseQA 
+   // that's not empty is a Long
+   public static boolean isLong(ResponseQA response)
    {
-
-      String str = response.getAnswers().get(0);
-
-      try
+      int i = 0;
+      boolean flag = false;
+      for (String elem : response.getAnswers())
       {
-         long l = Long.parseLong(str);
+         if (elem.isEmpty() || elem.equalsIgnoreCase(" "))
+            i++;
+         else
+         {
+            try
+            {
+               long l = Long.parseLong(response.getAnswers().get(i));
+               flag = true;
+            }
+            catch (NumberFormatException nfe)
+            {
+               flag = false;
+            }
+         }
       }
-      catch (NumberFormatException nfe)
-      {
-         return false;
-      }
-      return true;
-
+      return flag;
    }
 
    // checks if the first element of the answer from a given RsponseQA object is
@@ -202,10 +220,8 @@ public class DataValidator implements GlobalVar
       answers.add("");
       answers.add("");
       answers.add("Other - Write in (Required)");
-      ResponseQA res = new ResponseQA(answers, "What's the temperature?");
-      System.out.println(dv.isOtherQA(res));
-      
-      
+      // ResponseQA res = new ResponseQA(answers, "QUESTION");
+      System.out.println(dv.isOtherQA(RESPQA));
 
    }
 
