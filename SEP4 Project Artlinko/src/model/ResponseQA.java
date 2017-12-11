@@ -16,21 +16,23 @@ public class ResponseQA implements StructDefinitionElements {
 
 	private ArrayList<String> answers;
 	private String question;
-	public HashMap<String, Boolean> property;
+	private HashMap<String, Boolean> property;
 	//NEEDS TO BE INTEGRATED
-	public String dimension;
+	private String dimension;
 	//NEEDS TO BE INTEGRATED
 	//this defines in which row is the q and a placed
-	public String surveyInstanceID;
+	private String surveyInstanceID;
 	
 	//this defines the question id for the whole column
-	public String questionID;
+	private String questionID;
 	
 	//this defines the question answer combination
-	public String answerID;
+	private String answerID;
 	
 	//general id of the batch
-	public String entireSurveyID;
+	private String entireSurveyID;
+	
+	private String otherColumnName="";
 	
 	public ResponseQA(ArrayList<String> answers, String question, String questionID,
 			String surveyInstanceID, String entireSurveyID) {
@@ -38,7 +40,7 @@ public class ResponseQA implements StructDefinitionElements {
 		this.answers = answers;
 		this.question = question;
 		this.questionID=questionID;
-		this.surveyInstanceID= entireSurveyID;
+		this.surveyInstanceID= surveyInstanceID;
 		this.entireSurveyID= entireSurveyID;
 		this.answerID= IDGen.generateId();
 		
@@ -51,6 +53,19 @@ public class ResponseQA implements StructDefinitionElements {
 		this.property.put(SGD, false);
 		this.property.put(OTHER, false);	
 	}
+	
+	public String getEntireSurveyID() {
+		return entireSurveyID;
+	}
+
+	public void setEntireSurveyID(String entireSurveyID) {
+		this.entireSurveyID = entireSurveyID;
+	}
+
+	public void setAnswerID(String answerID) {
+		this.answerID = answerID;
+	}
+
 	public ArrayList<String> getAnswers() {
 		return answers;
 	}
@@ -90,9 +105,14 @@ public class ResponseQA implements StructDefinitionElements {
 	public String getAnswerID() {
 		return answerID;
 	}
-	
-	
-	
+	public String getOtherColumnName() {
+		return otherColumnName;
+	}
+
+	public void setOtherColumnName(String otherColumnName) {
+		this.otherColumnName = otherColumnName;
+	}
+
 	@Override
 	public String toString() {
 		return "ResponseQA [answers=" + answers + ", question=" + question
@@ -101,6 +121,7 @@ public class ResponseQA implements StructDefinitionElements {
 				+ questionID + ", answerID=" + answerID + ", entireSurveyID="
 				+ entireSurveyID + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

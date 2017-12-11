@@ -116,14 +116,9 @@ public class CSVHelper implements GlobalVar
  
     
     
-    public List<List<String>> readSurveys(){
+    public List<List<String>> readSurveys() throws Exception{
     	List<List<String>> list= null;
-    	try {
     		list = readData(TESTPATH);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     	return list;
     }
     
