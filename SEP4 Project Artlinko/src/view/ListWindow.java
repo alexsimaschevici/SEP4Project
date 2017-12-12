@@ -19,7 +19,9 @@ import controller.SystemController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JScrollBar;
 
 public class ListWindow extends JFrame
@@ -64,13 +66,17 @@ public class ListWindow extends JFrame
       SystemController contr = new SystemController();
       contr.readSurveys();
       SurveyResponsesCollection coll = contr.getAllResponsesCollection();
+      String surveyInstanceID = coll.getSurveys().get(0).getSurveyInstanceID();
+      ArrayList<ResponseQA> qaList = (ArrayList<ResponseQA>) coll
+            .getRow(surveyInstanceID);
       int indx = 0;
-      for (ResponseQA elem : coll.getSurveys())
+      // We display only the first respondent's Question+Answer+answertype
+      for (ResponseQA elem : qaList)
       {
-         String questionStr = coll.getSurvey(indx).getQuestion();
-         String answerDataStr = coll.getSurvey(indx).getAnswers().toString();
+         String questionStr = qaList.get(indx).getQuestion();
+         String answerDataStr = qaList.get(indx).getAnswers().toString();
          DataValidator dv = new DataValidator();
-         String answerTypenStr = dv.returnType(coll.getSurvey(indx));
+         String answerTypenStr = dv.returnType(qaList.get(indx));
 
          concatRow = questionStr + ":" + answerDataStr + ":" + answerTypenStr;
          dlm.addElement(concatRow);

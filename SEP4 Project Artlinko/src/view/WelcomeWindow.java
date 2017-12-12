@@ -153,7 +153,6 @@ public class WelcomeWindow extends JFrame
                try
                {
                   contr.readSurveys();
-                  System.out.println("read successfully!");
                   ListWindow listWin = new ListWindow();
                   listWin.setVisible(true);
                }
