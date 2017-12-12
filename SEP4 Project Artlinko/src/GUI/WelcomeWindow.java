@@ -111,11 +111,7 @@ public class WelcomeWindow extends JFrame
             try
             {
                csvH.readData(path);
-<<<<<<< HEAD
               // for (int i = 0; i < csvH.getProgressStatus(path).size() - 1; i++)
-=======
-               for (int i = 0; i < csvH.getProgressStatus(path).size() - 1; i++)
->>>>>>> a6371f9643c6d74e00ee5b94f78a9abe8a798962
                {
                 // Something is bbroken either here or in the getProgressStatus() method from CSVHelper class
                 //  progressStatusLabel.setText(csvH.getProgressStatus(path).get(
@@ -153,5 +149,10 @@ public class WelcomeWindow extends JFrame
 
       textArea.setBounds(27, 200, 396, 92);
       contentPane.add(textArea);
+      
+      JProgressBar progressBar = new JProgressBar();
+      progressBar.setStringPainted(true);
+      progressBar.setBounds(142, 28, 282, 26);
+      contentPane.add(progressBar);
    }
 }
