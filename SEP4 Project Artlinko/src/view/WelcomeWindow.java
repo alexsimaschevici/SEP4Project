@@ -1,4 +1,4 @@
-package GUI;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -111,14 +111,7 @@ public class WelcomeWindow extends JFrame
             try
             {
                csvH.readData(path);
-               for (int i = 0; i < csvH.getProgressStatus(path).size() - 1; i++)
-               {
-                // Something is bbroken either here or in the getProgressStatus() method from CSVHelper class
-                //  progressStatusLabel.setText(csvH.getProgressStatus(path).get(
-                //        i).toString());
-                  
-                //  System.out.println(csvH.getProgressStatus(path).get(i));
-               }
+               
             }
             catch (Exception e1)
             {
@@ -140,6 +133,29 @@ public class WelcomeWindow extends JFrame
       contentPane.add(progressStatusLabel);
 
       JButton restartBtn = new JButton("Restart");
+      restartBtn.addActionListener(new ActionListener()
+      {
+         public void actionPerformed(ActionEvent arg0)
+         {
+            if (!textField.getText().isEmpty())
+            {
+               String path = textField.getText();
+               path = path.replace("\\", "\\\\");
+               CSVHelper csvH = new CSVHelper();
+               
+               try
+               {
+                  csvH.readData(path);
+                  
+               }
+               catch (Exception e1)
+               {
+                  String errorM = e1.getMessage();
+                  textArea.setText(errorM);
+               }
+            }
+         }
+      });
       restartBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
       restartBtn.setBounds(456, 197, 94, 29);
       contentPane.add(restartBtn);
@@ -149,5 +165,10 @@ public class WelcomeWindow extends JFrame
 
       textArea.setBounds(27, 200, 396, 92);
       contentPane.add(textArea);
+      
+      JProgressBar progressBar = new JProgressBar();
+      progressBar.setStringPainted(true);
+      progressBar.setBounds(138, 28, 285, 29);
+      contentPane.add(progressBar);
    }
 }

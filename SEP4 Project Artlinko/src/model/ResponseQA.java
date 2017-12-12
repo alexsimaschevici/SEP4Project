@@ -32,7 +32,7 @@ public class ResponseQA implements StructDefinitionElements {
 	//general id of the batch
 	private String entireSurveyID;
 	
-	private String otherColumnName="";
+	private String otherColumnName="";//last parameter 
 	
 	public ResponseQA(ArrayList<String> answers, String question, String questionID,
 			String surveyInstanceID, String entireSurveyID) {
@@ -112,6 +112,13 @@ public class ResponseQA implements StructDefinitionElements {
 	public void setOtherColumnName(String otherColumnName) {
 		this.otherColumnName = otherColumnName;
 	}
+	
+	public HashMap<String, Boolean> getAllProperties(){
+	   HashMap<String, Boolean> hMap = new HashMap<>(); 
+	   hMap.putAll(property);
+	   return hMap; 
+	}
+	
 
 	@Override
 	public String toString() {
