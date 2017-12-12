@@ -20,11 +20,16 @@ import services.CSVHelper;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextArea;
+
 import java.awt.Color;
 import java.awt.SystemColor;
+
 import javax.swing.UIManager;
 import javax.swing.JProgressBar;
+
+import controller.SystemController;
 
 public class WelcomeWindow extends JFrame
 {
@@ -106,12 +111,14 @@ public class WelcomeWindow extends JFrame
          {
             String path = textField.getText();
             path = path.replace("\\", "\\\\");
-            CSVHelper csvH = new CSVHelper();
-            double percentage = 0;
+            SystemController contr = new SystemController();
+
             try
             {
-               csvH.readData(path);
-               
+               contr.readSurveys();
+               System.out.println("read successfully!");
+               ListWindow listWin = new ListWindow();
+               listWin.setVisible(true);
             }
             catch (Exception e1)
             {
@@ -141,12 +148,14 @@ public class WelcomeWindow extends JFrame
             {
                String path = textField.getText();
                path = path.replace("\\", "\\\\");
-               CSVHelper csvH = new CSVHelper();
-               
+               SystemController contr = new SystemController();
+
                try
                {
-                  csvH.readData(path);
-                  
+                  contr.readSurveys();
+                  System.out.println("read successfully!");
+                  ListWindow listWin = new ListWindow();
+                  listWin.setVisible(true);
                }
                catch (Exception e1)
                {
@@ -165,7 +174,7 @@ public class WelcomeWindow extends JFrame
 
       textArea.setBounds(27, 200, 396, 92);
       contentPane.add(textArea);
-      
+
       JProgressBar progressBar = new JProgressBar();
       progressBar.setStringPainted(true);
       progressBar.setBounds(138, 28, 285, 29);
