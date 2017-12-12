@@ -1,9 +1,10 @@
 package services;
 
+import globalvar.GlobalVar;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import config.GlobalVar;
 import model.ResponseQA;
 
 /**
@@ -69,7 +70,7 @@ public class DataValidator implements GlobalVar
    }
 
    // a method for dealing with the "other" columns ????
-   public void cleanOtherCol(ResponseQA response)
+   public void cleanOtherCol(ResponseQA response) throws Exception
    {
       List<String> columnList = CSVHELPER.readSurveys().get(0);
 
@@ -224,7 +225,7 @@ public class DataValidator implements GlobalVar
       answers.add("");
       answers.add("Other - Write in (Required)");
       // ResponseQA res = new ResponseQA(answers, "QUESTION");
-   //   System.out.println(dv.isOtherQA(RESPQA));
+      System.out.println(dv.isOtherQA(RESPQA));
 
    }
     
@@ -243,20 +244,5 @@ public class DataValidator implements GlobalVar
 			// System.out.println(structure.get(i)+" || "+subList.get(i)+"");
 		}
 	}
-	
-	
-	
-	/**
-	 * Cleans the question body when reference question body is included
-	 * inside the actual question and split by ":"
-	 * @param q
-	 */
-	public static String fixQuestionBody(String q){
-		String ret=q;
-			if(q.contains(":")){
-				String [] temp = q.split(":");
-				ret=temp[1];
-			}
-		return ret;	
-	}
+
 }

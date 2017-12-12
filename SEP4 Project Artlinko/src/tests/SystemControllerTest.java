@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
+import globalvar.StructDefinitionElements;
 import model.ResponseQA;
 import model.SurveyResponsesCollection;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import config.StructDefinitionElements;
 import controller.SystemController;
 
 public class SystemControllerTest implements StructDefinitionElements{

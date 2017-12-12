@@ -3,12 +3,12 @@ package tests;
 
 
 import static org.junit.Assert.*;
+import globalvar.GlobalVar;
 
 import java.util.List;
 
 import org.junit.Test;
 
-import config.GlobalVar;
 import services.CSVHelper;
 
 public class ParsingTest implements GlobalVar

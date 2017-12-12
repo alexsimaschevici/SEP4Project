@@ -27,7 +27,7 @@ public class SurveyResponsesCollection {
 		this.surveyResp = surveys;
 	}
 	
-	public void addSurvey(ResponseQA oneResp){
+	public void addSurvey(ResponseQA oneResp, int row){
 		surveyResp.add(oneResp);
 	}
 	
@@ -36,6 +36,7 @@ public class SurveyResponsesCollection {
 		return surveyResp.get(pos);
 	}
 
+	
 	public int size(){
 		return surveyResp.size();
 	}

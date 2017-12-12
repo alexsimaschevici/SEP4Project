@@ -1,13 +1,14 @@
 package view;
 
+import globalvar.GlobalVar;
+import globalvar.StructDefinitionElements;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import model.SurveyResponsesCollection;
-import config.GlobalVar;
-import config.StructDefinitionElements;
 import controller.SystemController;
 
 
