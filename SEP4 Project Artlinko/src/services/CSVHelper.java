@@ -1,6 +1,6 @@
 package services;
 
-import globalvar.GlobalVar;
+import config.GlobalVar;
 
 import java.io.File;
 import java.io.FileInputStream;
