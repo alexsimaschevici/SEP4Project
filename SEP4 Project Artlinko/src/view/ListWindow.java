@@ -24,6 +24,8 @@ import java.util.List;
 
 import javax.swing.JScrollBar;
 
+import java.awt.Font;
+
 public class ListWindow extends JFrame
 {
 
@@ -54,10 +56,10 @@ public class ListWindow extends JFrame
 
       JScrollPane scrollPane = new JScrollPane();
       scrollPane.setBounds(10, 25, 764, 377);
-      JList<String> list = new JList<String>();
-      list.setBounds(10, 25, 764, 377);
+      JList<String> jList = new JList<String>();
+      jList.setBounds(10, 25, 764, 377);
 
-      scrollPane.setViewportView(list);
+      scrollPane.setViewportView(jList);
       contentPane.add(scrollPane);
 
       String concatRow = "";
@@ -69,6 +71,8 @@ public class ListWindow extends JFrame
       String surveyInstanceID = coll.getSurveys().get(0).getSurveyInstanceID();
       ArrayList<ResponseQA> qaList = (ArrayList<ResponseQA>) coll
             .getRow(surveyInstanceID);
+      // ArrayList<String> struct = (ArrayList<String>)
+      // contr.getStructForView();
       int indx = 0;
       // We display only the first respondent's Question+Answer+answertype
       for (ResponseQA elem : qaList)
@@ -83,7 +87,25 @@ public class ListWindow extends JFrame
          indx++;
       }
 
-      list.setModel(dlm);
+      jList.setModel(dlm);
+
+      JButton btnNewButton = new JButton("Confirm");
+      btnNewButton.addActionListener(new ActionListener()
+      {
+         public void actionPerformed(ActionEvent arg0)
+         {
+            String selected = "";
+            int[] selectedIx = jList.getSelectedIndices();
+            for (int i = 0; i < selectedIx.length; i++)
+            {
+               selected += jList.getModel().getElementAt(selectedIx[i]) + "\n";
+            }
+            System.out.println(selected);
+         }
+      });
+      btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+      btnNewButton.setBounds(640, 413, 134, 29);
+      contentPane.add(btnNewButton);
 
    }
 }

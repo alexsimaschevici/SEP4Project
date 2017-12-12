@@ -41,7 +41,7 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		// read all data from file
 		try{
 		allData = CSVHELPER.readSurveys();
-		  System.out.println("i got here");
+		  
 		}
 		catch(Exception E){
 			//HANDLE READING EXCEPTION FROM FILE AND DISPLAY IN GUI

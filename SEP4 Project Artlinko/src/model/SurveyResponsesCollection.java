@@ -124,45 +124,16 @@ public class SurveyResponsesCollection implements GlobalVar
       return true;
    }
 
-   public static <K, V> HashMap<K, V> mapFromArrays(K[] keys, V[] values)
-   {
-      HashMap<K, V> result = new HashMap<K, V>();
-      for (int i = 0; i < keys.length; i++)
-      {
-         result.put(keys[i], values[i]);
-      }
-      return result;
-
-   }
 
    //TEST 
    public static void main(String[] args)
    {
-      /*System.out.println("tests");
-      Boolean[] values = new Boolean[] { false, true, false, false, false,
-            true, false };
-      String[] keys = new String[] { "PERSON", "QUESTION", "SURVEY", "GENERAL",
-            "INSTANCE", "SGD", "OTHER" };
-
-      HashMap<String, Boolean> myMap;
-      {
-         myMap = mapFromArrays(keys, values);
-      }
-
-      RESPQA.setProperty("PERSON", false);
-      RESPQA.setProperty("QUESTION", true);
-      RESPQA.setProperty("SURVEY", false);
-      RESPQA.setProperty("GENERAL", false);
-      RESPQA.setProperty("INSTANCE", false);
-      RESPQA.setProperty("SGD", false);
-      RESPQA.setProperty("OTHER", false);
-
-      System.out.println(mapsAreEqual(myMap, RESPQA.getAllProperties()));*/ 
+      
    
       SystemController contr = new SystemController(); 
       contr.readSurveys();
       SurveyResponsesCollection coll = contr.getAllResponsesCollection(); 
-      System.out.println(coll.getSurvey(0).getQuestion());
+      System.out.println(contr.getStructForView().size());
    
    }
 

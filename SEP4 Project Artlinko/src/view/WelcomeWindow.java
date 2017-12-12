@@ -91,7 +91,7 @@ public class WelcomeWindow extends JFrame
          public void actionPerformed(ActionEvent arg0)
          {
             JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new java.io.File("C:/Users"));
+            fc.setCurrentDirectory(new java.io.File("C:/Users/Cristi/Documents/Course Material/SEM4/SEP4/SEP4D"));
             fc.setDialogTitle("File Browser.");
             fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             if (fc.showOpenDialog(browseBtn) == JFileChooser.APPROVE_OPTION)
@@ -116,7 +116,6 @@ public class WelcomeWindow extends JFrame
             try
             {
                contr.readSurveys();
-               System.out.println("read successfully!");
                ListWindow listWin = new ListWindow();
                listWin.setVisible(true);
             }
