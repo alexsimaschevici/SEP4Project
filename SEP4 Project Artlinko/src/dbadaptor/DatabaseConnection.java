@@ -13,6 +13,11 @@ import config.DatabaseConnectionConfig;
 import oracle.jdbc.driver.OracleDriver;
 
 
+/**
+ * Database connection logic
+ * @author Alexandru
+ *
+ */
 public class DatabaseConnection implements DatabaseConnectionConfig {
 
 	private static Connection conn;

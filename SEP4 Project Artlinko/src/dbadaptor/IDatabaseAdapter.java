@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * This is the adapter for storing persistent data
- * @author SIR
+ * @author Alexandru
  * 
  */
 public interface IDatabaseAdapter

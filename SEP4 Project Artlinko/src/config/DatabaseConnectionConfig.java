@@ -1,5 +1,10 @@
 package config;
 
+/**
+ * Database connection details
+ * @author Alexandru
+ *
+ */
 public interface DatabaseConnectionConfig {
 	
 	/* connection details */

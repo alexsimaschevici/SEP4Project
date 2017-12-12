@@ -61,15 +61,15 @@ public class SurveyResponsesCollection {
 	   }
 
 	   // TO BE IMPLEMENTED
-	   public List<ResponseQA> getByProperty(HashMap<String, Boolean> properties)
-	   {
-	      ArrayList<ResponseQA> list = new ArrayList<ResponseQA>();
-	      for (ResponseQA elem : surveyResp)
-	         if (elem.property == properties)
-	            list.add(elem);
-	      return list;
-
-	   }
+//	   public List<ResponseQA> getByProperty(HashMap<String, Boolean> properties)
+//	   {
+//	      ArrayList<ResponseQA> list = new ArrayList<ResponseQA>();
+//	      for (ResponseQA elem : surveyResp)
+//	         if (elem.getProperty(key) == properties)
+//	            list.add(elem);
+//	      return list;
+//
+//	   }
 	
 
 }
