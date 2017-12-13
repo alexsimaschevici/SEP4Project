@@ -57,6 +57,7 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		List<String> strucureIdCollection = IDGen.assignIdToStruct(structure);
 		
 		// Process data into ResponseQA objects
+		boolean structComplete=false;
 		for (List<String> subList : allData) {
 			
 			//Assign ID to each row
@@ -76,8 +77,11 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 						strucureIdCollection.get(i),
 						surveyInstaceID, entireSurveyID);
 				allResponses.addSurvey(resp);
-				structureID.add(i,surveyInstaceID);
+				
+				if(!structComplete)
+				structureID.add(i,strucureIdCollection.get(i));
 			}
+ 			structComplete=true;
 		}
 
 		// assign types to e

@@ -45,5 +45,16 @@ public class SystemControllerTest implements StructDefinitionElements,
       int size = controller.getAllResponsesCollection().size();
       assertEquals(size, 50000);
    }
+   
+   
+   @Test
+   public void testGetStructForView()
+   {
+	  controller.readSurveys();
+      List<String> struct= controller.getStructForView();
+      int size = struct.size();
+      assertEquals(size, 100);
+      System.out.println("Done!");
+   }
 
 }

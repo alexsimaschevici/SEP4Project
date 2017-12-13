@@ -24,7 +24,7 @@ public class DataValidationTest implements GlobalVar
          add((long) 150000);
 
       }
-   };;
+   };
 
    DataValidator dv = new DataValidator();
 
