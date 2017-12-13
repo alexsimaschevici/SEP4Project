@@ -60,15 +60,16 @@ public class ListWindow extends JFrame
       JList<String> jList = new JList<String>();
       jList.setBounds(10, 25, 764, 377);
       scrollPane.setViewportView(jList);
-      ListSelectionModel listSelectionModel = jList.getSelectionModel();
-      listSelectionModel.addListSelectionListener(new SharedListSelectionHandler());
+      // ListSelectionModel listSelectionModel = jList.getSelectionModel();
+      // listSelectionModel.addListSelectionListener(new
+      // SharedListSelectionHandler());
       contentPane.add(scrollPane);
 
       String concatRow = "";
       DefaultListModel<String> dlm = new DefaultListModel<String>();
 
       SystemController contr = new SystemController();
-      contr.readSurveys();
+      contr.readSurveys("");
       SurveyResponsesCollection coll = contr.getAllResponsesCollection();
       String surveyInstanceID = coll.getSurveys().get(0).getSurveyInstanceID();
       ArrayList<ResponseQA> qaList = (ArrayList<ResponseQA>) coll
@@ -79,12 +80,34 @@ public class ListWindow extends JFrame
       // We display only the first respondent's Question+Answer+answertype
       for (ResponseQA elem : qaList)
       {
-         String questionStr = qaList.get(indx).getQuestion();
-         String answerDataStr = qaList.get(indx).getAnswers().toString();
          DataValidator dv = new DataValidator();
-         String answerTypenStr = dv.returnType(qaList.get(indx));
 
-         concatRow = questionStr + ":" + answerDataStr + ":" + answerTypenStr;
+         String questionStr = qaList.get(indx).getQuestion();
+         questionStr = String.format("%-20s", questionStr);
+         String answerDataStr = qaList.get(indx).getAnswers().toString();
+         answerDataStr = String.format("%20s", answerDataStr);
+         String answerTypeStr = dv.returnType(qaList.get(indx));
+         answerTypeStr = String.format("%20s", answerTypeStr);
+         //concatRow = questionStr + ":" + answerDataStr + ":" + answerTypeStr;
+
+         if (questionStr.length() < 20 && answerDataStr.length() < 20)
+         {
+            int n = 20 - questionStr.length(); 
+            for (int i=0; i<n; i++)
+               questionStr += " "; 
+            concatRow = questionStr + ":" + answerDataStr + ":"
+                  + answerTypeStr;
+         }
+         else if (questionStr.length() < 20)
+            concatRow = questionStr + answerDataStr.substring(0, 20) + ":"
+                  + answerTypeStr;
+         else if (answerDataStr.length() < 20)
+            concatRow = questionStr.substring(0, 20) + answerDataStr + ":"
+                  + answerTypeStr;
+         else
+            concatRow = questionStr.substring(0, 20) + ":"
+                  + answerDataStr.substring(0, 20) + ":" + answerTypeStr;
+
          dlm.addElement(concatRow);
          indx++;
       }
@@ -103,13 +126,20 @@ public class ListWindow extends JFrame
             {
                selected += jList.getModel().getElementAt(selectedIx[i]) + "\n";
             }
-            QPropertiesWindow propWin = new QPropertiesWindow();
-            propWin.setVisible(true);
+            /*
+             * QPropertiesWindow propWin = new QPropertiesWindow();
+             * propWin.setVisible(true);
+             */
          }
       });
       btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
       btnNewButton.setBounds(640, 413, 134, 29);
       contentPane.add(btnNewButton);
 
+   }
+
+   public static String padRight(String s, int n)
+   {
+      return String.format(s + "");
    }
 }

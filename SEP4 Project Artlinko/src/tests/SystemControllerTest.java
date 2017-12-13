@@ -28,7 +28,7 @@ public class SystemControllerTest implements StructDefinitionElements,
    @Test
    public void testReadSurveys01()
    {
-      controller.readSurveys();
+      controller.readSurveys("");
       List<ResponseQA> temps = controller.getAllResponsesCollection()
             .getSurveys();
       assertEquals(temps.get(0).getAnswers().get(0), "33");
@@ -41,9 +41,34 @@ public class SystemControllerTest implements StructDefinitionElements,
    @Test
    public void testReadSurveys02()
    {
-      controller.readSurveys();
+      controller.readSurveys("");
       int size = controller.getAllResponsesCollection().size();
       assertEquals(size, 50000);
+   }
+   
+   
+   /**
+ * Tests the correct size of the list of columns with parameters
+ */
+@Test
+   public void testGetStructForView()
+   {
+	  controller.readSurveys("");
+      List<String> struct= controller.getStructForView();
+      int size = struct.size();
+      assertEquals(size, 100);
+   }
+   
+   /**
+ * Tests the correct reading and assigning of properties to ResponseQA collection
+ */
+@Test
+   public void testSaveNewProperties()
+   {
+	  controller.readSurveys("");
+      List<String> struct= controller.getStructForView();
+      int size = struct.size();
+      assertEquals(controller.saveNewProperties(struct),50000);
    }
 
 }

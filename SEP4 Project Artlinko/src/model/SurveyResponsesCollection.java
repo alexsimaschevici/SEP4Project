@@ -131,7 +131,7 @@ public class SurveyResponsesCollection implements GlobalVar
       
    
       SystemController contr = new SystemController(); 
-      contr.readSurveys();
+      contr.readSurveys("");
       SurveyResponsesCollection coll = contr.getAllResponsesCollection(); 
       System.out.println(contr.getStructForView().size());
    

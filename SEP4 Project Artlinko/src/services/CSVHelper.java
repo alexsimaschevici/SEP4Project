@@ -21,7 +21,9 @@ import javax.annotation.PostConstruct;
 public class CSVHelper implements GlobalVar
 {
 
-   /**
+   private String filePath;
+
+/**
     * Parses the lines from the files Returns a null when the input stream is
     * empty
     * 
@@ -154,12 +156,13 @@ public class CSVHelper implements GlobalVar
       return list.get(0);
    }
 
-   public List<List<String>> readSurveys()
+   public List<List<String>> readSurveys(String path)
    {
+	  this.filePath=path; 
       List<List<String>> list = null;
       try
       {
-         list = readData(TESTPATH);
+         list = readData(path);
       }
       catch (Exception e)
       {
