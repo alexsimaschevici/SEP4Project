@@ -126,6 +126,14 @@ public class WelcomeWindow extends JFrame
             }
          }
       };
+      
+      ActionListener nextFrame = new ActionListener()
+      {
+         public void actionPerformed(ActionEvent e)
+         {
+           
+         }
+      };
 
       fetchBtn.addActionListener(fetchFile);
       fetchBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -143,8 +151,16 @@ public class WelcomeWindow extends JFrame
       JButton restartBtn = new JButton("Restart");
       restartBtn.addActionListener(fetchFile);
       restartBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
-      restartBtn.setBounds(456, 197, 94, 29);
+      restartBtn.setBounds(356, 197, 94, 29);
+      restartBtn.setEnabled(false); 
       contentPane.add(restartBtn);
+      
+      JButton nextBtn = new JButton("Next");
+      nextBtn.addActionListener(nextFrame);
+      nextBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
+      nextBtn.setBounds(456, 197, 94, 29);
+      contentPane.add(nextBtn);
+      
       
       textArea.setForeground(new Color(255, 0, 0));
       textArea.setBackground(UIManager.getColor("CheckBox.background"));
