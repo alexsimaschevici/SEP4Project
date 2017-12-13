@@ -43,27 +43,7 @@ public class WelcomeWindow
    SystemController contr;
    JFrame frame;
 
-//   /**
-//    * Launch the application.
-//    */
-//   public static void main(String[] args)
-//   {
-//      EventQueue.invokeLater(new Runnable()
-//      {
-//         public void run()
-//         {
-//            try
-//            {
-//               WelcomeWindow frame = new WelcomeWindow();
-//               frame.setVisible(true);
-//            }
-//            catch (Exception e)
-//            {
-//               e.printStackTrace();
-//            }
-//         }
-//      });
-//   }
+
 
    /**
     * Create the frame.
@@ -184,7 +164,5 @@ public class WelcomeWindow
 	      progressStatusLabel.setText("0%");
 	      frame.setVisible(true);
    }
-   
-   
    
 }

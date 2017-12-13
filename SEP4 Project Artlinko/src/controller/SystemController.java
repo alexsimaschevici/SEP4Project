@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import services.DataValidator;
 import services.IDGen;
 import view.View;
 import view.WelcomeWindow;
+import loadLogic.LoadToDatabaseStrategy1;
 import model.ResponseQA;
 import model.SurveyResponsesCollection;
 
@@ -23,7 +25,7 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 
 	private View tView;
 	private WelcomeWindow view;
-	private List<String> structure = null;
+	private static List<String> structure = null;
 	private List<String> structureID;
 	private SurveyResponsesCollection allResponses;
 	private List<List<String>> allData = null;
@@ -31,6 +33,12 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 	public SystemController() {
 		this.tView = new View();
 		this.view= new WelcomeWindow(this);
+		this.allResponses = new SurveyResponsesCollection();
+		structureID= new ArrayList<String>();
+	}
+	
+	public SystemController(String no) {
+		this.tView = new View();
 		this.allResponses = new SurveyResponsesCollection();
 		structureID= new ArrayList<String>();
 	}
@@ -161,10 +169,29 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 
 	//TEST MAIN
 	public static void main(String[] args) {
-		SystemController controller = new SystemController();
+		SystemController controller = new SystemController("no");
 
-//		controller.readSurveys("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv");
-//		controller.displaySurveys();
+		controller.readSurveys("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv");
+		/*{PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER};*/
+		HashMap<String, Boolean> properties = new HashMap<String, Boolean>();
+		properties.put(TYPES[0], false);
+		properties.put(TYPES[1], false);
+		properties.put(TYPES[2], true);
+		properties.put(TYPES[3], true);
+		properties.put(TYPES[4], false);
+		properties.put(TYPES[5], false);
+		properties.put(TYPES[6], false);
+		
+		List<ResponseQA> SGlist = controller.allResponses.getByPropertyHM(properties);
+		
+		try {
+			LoadToDatabaseStrategy1.registerGeneralSurveyBatch(SGlist, structure);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//controller.displaySurveys();
 
 	}
 
