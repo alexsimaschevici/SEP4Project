@@ -183,6 +183,7 @@ public class WelcomeWindow
       textArea.setText("Error Loading File. Check file path");
    }
    
+
    public void drawSecondPage(){
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       frame.setBounds(100, 100, 946, 581);
@@ -210,4 +211,5 @@ public class WelcomeWindow
       btnNewButton.setBounds(330, 477, 225, 23);
       contentPane.add(btnNewButton);
    }
+
 }

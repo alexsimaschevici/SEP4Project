@@ -40,12 +40,12 @@ public class View implements GlobalVar, StructDefinitionElements{
 		// TODO Auto-generated method stub
 		
 		for (int j=0; j<allResponses.size(); j++){
-			if (j < 20)
-			allResponses.getSurvey(j).setProperty(PERSON, true);
-			else{
+//			if (j < 20)
+//			allResponses.getSurvey(j).setProperty(PERSON, true);
+//			else if(j>20&&j<60){
 				allResponses.getSurvey(j).setProperty(SURVEY, true);
 				allResponses.getSurvey(j).setProperty(GENERAL, true);
-			}	
+//			}
 	}
 	}
 	
