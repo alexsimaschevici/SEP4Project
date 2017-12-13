@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.JButton;
+import javax.swing.ListSelectionModel;
 
 import services.DataValidator;
 import model.ResponseQA;
@@ -58,8 +59,9 @@ public class ListWindow extends JFrame
       scrollPane.setBounds(10, 25, 764, 377);
       JList<String> jList = new JList<String>();
       jList.setBounds(10, 25, 764, 377);
-
       scrollPane.setViewportView(jList);
+      ListSelectionModel listSelectionModel = jList.getSelectionModel();
+      listSelectionModel.addListSelectionListener(new SharedListSelectionHandler());
       contentPane.add(scrollPane);
 
       String concatRow = "";
@@ -95,12 +97,14 @@ public class ListWindow extends JFrame
          public void actionPerformed(ActionEvent arg0)
          {
             String selected = "";
+
             int[] selectedIx = jList.getSelectedIndices();
             for (int i = 0; i < selectedIx.length; i++)
             {
                selected += jList.getModel().getElementAt(selectedIx[i]) + "\n";
             }
-            System.out.println(selected);
+            QPropertiesWindow propWin = new QPropertiesWindow();
+            propWin.setVisible(true);
          }
       });
       btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));

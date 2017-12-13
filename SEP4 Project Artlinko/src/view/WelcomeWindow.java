@@ -105,27 +105,24 @@ public class WelcomeWindow extends JFrame
       contentPane.add(browseBtn);
 
       JButton fetchBtn = new JButton("Fetch file");
-      fetchBtn.addActionListener(new ActionListener()
+      ActionListener fetchFile = new ActionListener()
       {
          public void actionPerformed(ActionEvent e)
          {
-            String path = textField.getText();
-            path = path.replace("\\", "\\\\");
-            SystemController contr = new SystemController();
-
-            try
+            if (!textField.getText().isEmpty())
             {
+               String path = textField.getText();
+               path = path.replace("\\", "\\\\");
+               SystemController contr = new SystemController();
                contr.readSurveys();
+               
                ListWindow listWin = new ListWindow();
                listWin.setVisible(true);
             }
-            catch (Exception e1)
-            {
-               String errorM = e1.getMessage();
-               textArea.setText(errorM);
-            }
          }
-      });
+      };
+
+      fetchBtn.addActionListener(fetchFile);
       fetchBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
       fetchBtn.setBounds(223, 110, 110, 29);
       contentPane.add(fetchBtn);
@@ -139,33 +136,11 @@ public class WelcomeWindow extends JFrame
       contentPane.add(progressStatusLabel);
 
       JButton restartBtn = new JButton("Restart");
-      restartBtn.addActionListener(new ActionListener()
-      {
-         public void actionPerformed(ActionEvent arg0)
-         {
-            if (!textField.getText().isEmpty())
-            {
-               String path = textField.getText();
-               path = path.replace("\\", "\\\\");
-               SystemController contr = new SystemController();
-
-               try
-               {
-                  contr.readSurveys();
-                  ListWindow listWin = new ListWindow();
-                  listWin.setVisible(true);
-               }
-               catch (Exception e1)
-               {
-                  String errorM = e1.getMessage();
-                  textArea.setText(errorM);
-               }
-            }
-         }
-      });
+      restartBtn.addActionListener(fetchFile);
       restartBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
       restartBtn.setBounds(456, 197, 94, 29);
       contentPane.add(restartBtn);
+      
       textArea.setForeground(new Color(255, 0, 0));
       textArea.setBackground(UIManager.getColor("CheckBox.background"));
       textArea.setLineWrap(true);
