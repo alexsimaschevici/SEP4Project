@@ -69,7 +69,7 @@ public class ListWindow extends JFrame
       DefaultListModel<String> dlm = new DefaultListModel<String>();
 
       SystemController contr = new SystemController();
-      contr.readSurveys();
+      contr.readSurveys("");
       SurveyResponsesCollection coll = contr.getAllResponsesCollection();
       String surveyInstanceID = coll.getSurveys().get(0).getSurveyInstanceID();
       ArrayList<ResponseQA> qaList = (ArrayList<ResponseQA>) coll

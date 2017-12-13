@@ -9,6 +9,7 @@ import config.StructDefinitionElements;
 import services.DataValidator;
 import services.IDGen;
 import view.View;
+import view.WelcomeWindow;
 import model.ResponseQA;
 import model.SurveyResponsesCollection;
 
@@ -20,14 +21,16 @@ import model.SurveyResponsesCollection;
  */
 public class SystemController implements GlobalVar, StructDefinitionElements {
 
-	private View view;
+	private View tView;
+	private WelcomeWindow view;
 	private List<String> structure = null;
 	private List<String> structureID;
 	private SurveyResponsesCollection allResponses;
 	private List<List<String>> allData = null;
 
 	public SystemController() {
-		this.view = new View();
+		this.tView = new View();
+		this.view= new WelcomeWindow(this);
 		this.allResponses = new SurveyResponsesCollection();
 		structureID= new ArrayList<String>();
 	}
@@ -36,11 +39,11 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 	/**
 	 * Builds up the survey structure in local memory as objects of type ResponseQA 
 	 */
-	public void readSurveys() {
+	public void readSurveys(String path) {
 
 		// read all data from file
 		try{
-		allData = CSVHELPER.readSurveys();
+		allData = CSVHELPER.readSurveys(path);
 		  
 		}
 		catch(Exception E){
@@ -86,7 +89,7 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 		}
 
 		// assign types to e
-		view.getTypesAssigned(structure,allResponses);
+		tView.getTypesAssigned(structure,allResponses);
 	}
 	
 	
@@ -145,7 +148,6 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 	
 	///TEST OUTPUT SURVEYS
 	public void displaySurveys() {
-		int count=0;
 		for (int i=0; i<allResponses.size(); i++) {
 			System.out.println(allResponses.getSurvey(i).toString());
 		}
@@ -161,8 +163,8 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 	public static void main(String[] args) {
 		SystemController controller = new SystemController();
 
-		controller.readSurveys();
-		controller.displaySurveys();
+//		controller.readSurveys("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv");
+//		controller.displaySurveys();
 
 	}
 

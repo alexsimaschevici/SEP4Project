@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 import services.CSVHelper;
 
@@ -39,34 +40,38 @@ public class WelcomeWindow extends JFrame
    JTextArea textArea = new JTextArea();
    JLabel lblProgress = new JLabel("Progress:");
    JLabel progressStatusLabel = new JLabel("");
+   SystemController contr;
 
-   /**
-    * Launch the application.
-    */
-   public static void main(String[] args)
-   {
-      EventQueue.invokeLater(new Runnable()
-      {
-         public void run()
-         {
-            try
-            {
-               WelcomeWindow frame = new WelcomeWindow();
-               frame.setVisible(true);
-            }
-            catch (Exception e)
-            {
-               e.printStackTrace();
-            }
-         }
-      });
-   }
+//   /**
+//    * Launch the application.
+//    */
+//   public static void main(String[] args)
+//   {
+//      EventQueue.invokeLater(new Runnable()
+//      {
+//         public void run()
+//         {
+//            try
+//            {
+//               WelcomeWindow frame = new WelcomeWindow();
+//               frame.setVisible(true);
+//            }
+//            catch (Exception e)
+//            {
+//               e.printStackTrace();
+//            }
+//         }
+//      });
+//   }
 
    /**
     * Create the frame.
     */
-   public WelcomeWindow()
+   public WelcomeWindow(SystemController controller)
    {
+	   
+	  this.contr= controller; 
+
       setTitle("Welcome");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 576, 354);
@@ -91,7 +96,7 @@ public class WelcomeWindow extends JFrame
          public void actionPerformed(ActionEvent arg0)
          {
             JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new java.io.File("C:/Users/Cristi/Documents/Course Material/SEM4/SEP4/SEP4D"));
+            fc.setCurrentDirectory(new java.io.File("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv"));
             fc.setDialogTitle("File Browser.");
             fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             if (fc.showOpenDialog(browseBtn) == JFileChooser.APPROVE_OPTION)
@@ -112,9 +117,9 @@ public class WelcomeWindow extends JFrame
             if (!textField.getText().isEmpty())
             {
                String path = textField.getText();
-               path = path.replace("\\", "\\\\");
-               SystemController contr = new SystemController();
-               contr.readSurveys();
+               path = path.replace("\\", "/");
+               System.out.println(path);
+               contr.readSurveys(path);
                
                ListWindow listWin = new ListWindow();
                listWin.setVisible(true);
@@ -152,5 +157,8 @@ public class WelcomeWindow extends JFrame
       progressBar.setStringPainted(true);
       progressBar.setBounds(138, 28, 285, 29);
       contentPane.add(progressBar);
+      progressStatusLabel.setText("0%");
+      this.setVisible(true);
    }
+   
 }

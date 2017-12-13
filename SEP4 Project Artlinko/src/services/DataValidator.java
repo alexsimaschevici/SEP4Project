@@ -70,7 +70,7 @@ public class DataValidator implements GlobalVar
    // a method for dealing with the "other" columns ????
    public void cleanOtherCol(ResponseQA response)
    {
-      List<String> columnList = CSVHELPER.readSurveys().get(0);
+      List<String> columnList = CSVHELPER.readSurveys("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv").get(0);
 
       if (isOtherQA(response))
       {
