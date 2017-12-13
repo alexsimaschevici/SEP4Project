@@ -123,20 +123,23 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 	 * Method assigns values to the properties in each response
 	 * @param ans
 	 */
-	public void saveNewProperties(List<String> ans){
+	public long saveNewProperties(List<String> ans){
+		long count=0;
 		for(int i=0; i<ans.size(); i++){
 			for(ResponseQA item : allResponses.getColumn(ans.get(i).split(":")[0])){
 				String [] temp=ans.get(i).split(":");
-				item.setProperty(TYPES[0], Boolean.getBoolean(temp[3]));
-				item.setProperty(TYPES[1], Boolean.getBoolean(temp[4]));
-				item.setProperty(TYPES[2], Boolean.getBoolean(temp[5]));
-				item.setProperty(TYPES[3], Boolean.getBoolean(temp[6]));
-				item.setProperty(TYPES[4], Boolean.getBoolean(temp[7]));
-				item.setProperty(TYPES[5], Boolean.getBoolean(temp[8]));
-				item.setProperty(TYPES[6], Boolean.getBoolean(temp[9]));
-				item.setOtherColumnName(temp[10]);
+				item.setProperty(TYPES[0], Boolean.getBoolean(temp[2]));
+				item.setProperty(TYPES[1], Boolean.getBoolean(temp[3]));
+				item.setProperty(TYPES[2], Boolean.getBoolean(temp[4]));
+				item.setProperty(TYPES[3], Boolean.getBoolean(temp[5]));
+				item.setProperty(TYPES[4], Boolean.getBoolean(temp[6]));
+				item.setProperty(TYPES[5], Boolean.getBoolean(temp[7]));
+				item.setProperty(TYPES[6], Boolean.getBoolean(temp[8]));
+				item.setOtherColumnName(temp[9]);
+				count++;
 			}
 		}
+		return count;
 	}
 	
 	

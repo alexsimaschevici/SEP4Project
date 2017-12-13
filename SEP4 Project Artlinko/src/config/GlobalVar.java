@@ -6,8 +6,14 @@ import java.util.Arrays;
 import model.ResponseQA;
 import services.CSVHelper;
 
+/**
+ * Global variables
+ * @author Alexandru
+ *
+ */
 public interface GlobalVar {
- public final String TESTPATH= "C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv";
+ public final String TESTPATH= "C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv";
+// public final String TESTPATH= "C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv";
  public CSVHelper CSVHELPER = new CSVHelper();
  public ArrayList<String> CURRENCYLIST = new ArrayList<>(Arrays.asList("$", "kr"));
  
