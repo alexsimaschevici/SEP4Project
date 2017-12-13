@@ -7,13 +7,12 @@ import config.GlobalVar;
 import model.ResponseQA;
 
 /**
- * 
- *@author Alexandru, Cristian
+ * @author Alexandru, Cristian
  */
 public class DataValidator implements GlobalVar
 {
 
-   // checks if the first element of the answer from a given RsponseQA 
+   // checks if the first element of the answer from a given RsponseQA
    // that's not empty is a double
    public boolean isDouble(ResponseQA response)
    {
@@ -169,7 +168,7 @@ public class DataValidator implements GlobalVar
       return values;
    }
 
-   // checks if the first element of the answer from a given RsponseQA 
+   // checks if the first element of the answer from a given RsponseQA
    // that's not empty is a Long
    public static boolean isLong(ResponseQA response)
    {
@@ -215,6 +214,29 @@ public class DataValidator implements GlobalVar
       return false;
    }
 
+   public String returnType(ResponseQA response)
+   {
+      String type = "unknown";
+
+      
+      if (this.isLong(response))
+         type = "number.long";
+      else if (this.isDouble(response))
+         type = "number.double";
+      else if (this.isAge(response))
+         type = "age";
+      else if (this.isRange(response))
+         type = "range";
+      else if (this.isSGD(response))
+         type = "SGD value";
+      else if (this.isOtherQA(response))
+         type = "other write-in";
+      else
+         type = "text";
+
+      return type;
+   }
+
    // test
    public static void main(String[] args)
    {
@@ -224,39 +246,44 @@ public class DataValidator implements GlobalVar
       answers.add("");
       answers.add("Other - Write in (Required)");
       // ResponseQA res = new ResponseQA(answers, "QUESTION");
-   //   System.out.println(dv.isOtherQA(RESPQA));
+      // System.out.println(dv.isOtherQA(RESPQA));
 
    }
-    
-    
-    /**
-	 * This method fills in n/a where there is no answer present
-	 * @param answers
-	 * @param r
-	 */
-	public static void fixEmptyResponses(ArrayList<String> answers, String r){
-		if (r.equals("")) {
-			answers.add("n/a");
-			// System.out.println(structure.get(i)+" || n/a");
-		} else {
-			answers.add(r);
-			// System.out.println(structure.get(i)+" || "+subList.get(i)+"");
-		}
-	}
-	
-	
-	
-	/**
-	 * Cleans the question body when reference question body is included
-	 * inside the actual question and split by ":"
-	 * @param q
-	 */
-	public static String fixQuestionBody(String q){
-		String ret=q;
-			if(q.contains(":")){
-				String [] temp = q.split(":");
-				ret=temp[1];
-			}
-		return ret;	
-	}
+
+   /**
+    * This method fills in n/a where there is no answer present
+    * 
+    * @param answers
+    * @param r
+    */
+   public static void fixEmptyResponses(ArrayList<String> answers, String r)
+   {
+      if (r.equals(""))
+      {
+         answers.add("n/a");
+         // System.out.println(structure.get(i)+" || n/a");
+      }
+      else
+      {
+         answers.add(r);
+         // System.out.println(structure.get(i)+" || "+subList.get(i)+"");
+      }
+   }
+
+   /**
+    * Cleans the question body when reference question body is included inside
+    * the actual question and split by ":"
+    * 
+    * @param q
+    */
+   public static String fixQuestionBody(String q)
+   {
+      String ret = q;
+      if (q.contains(":"))
+      {
+         String[] temp = q.split(":");
+         ret = temp[1];
+      }
+      return ret;
+   }
 }

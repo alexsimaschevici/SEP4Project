@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import config.GlobalVar;
+import controller.SystemController;
 
 /**
  * Holds all the questions and responses of a survey from a current responder
@@ -123,5 +124,17 @@ public class SurveyResponsesCollection implements GlobalVar
       return true;
    }
 
-  
+
+   //TEST 
+   public static void main(String[] args)
+   {
+      
+   
+      SystemController contr = new SystemController(); 
+      contr.readSurveys();
+      SurveyResponsesCollection coll = contr.getAllResponsesCollection(); 
+      System.out.println(contr.getStructForView().size());
+   
+   }
+
 }

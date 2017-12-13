@@ -20,11 +20,16 @@ import services.CSVHelper;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextArea;
+
 import java.awt.Color;
 import java.awt.SystemColor;
+
 import javax.swing.UIManager;
 import javax.swing.JProgressBar;
+
+import controller.SystemController;
 
 public class WelcomeWindow extends JFrame
 {
@@ -86,7 +91,7 @@ public class WelcomeWindow extends JFrame
          public void actionPerformed(ActionEvent arg0)
          {
             JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new java.io.File("C:/Users"));
+            fc.setCurrentDirectory(new java.io.File("C:/Users/Cristi/Documents/Course Material/SEM4/SEP4/SEP4D"));
             fc.setDialogTitle("File Browser.");
             fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             if (fc.showOpenDialog(browseBtn) == JFileChooser.APPROVE_OPTION)
@@ -100,26 +105,24 @@ public class WelcomeWindow extends JFrame
       contentPane.add(browseBtn);
 
       JButton fetchBtn = new JButton("Fetch file");
-      fetchBtn.addActionListener(new ActionListener()
+      ActionListener fetchFile = new ActionListener()
       {
          public void actionPerformed(ActionEvent e)
          {
-            String path = textField.getText();
-            path = path.replace("\\", "\\\\");
-            CSVHelper csvH = new CSVHelper();
-            double percentage = 0;
-            try
+            if (!textField.getText().isEmpty())
             {
-               csvH.readData(path);
+               String path = textField.getText();
+               path = path.replace("\\", "\\\\");
+               SystemController contr = new SystemController();
+               contr.readSurveys();
                
-            }
-            catch (Exception e1)
-            {
-               String errorM = e1.getMessage();
-               textArea.setText(errorM);
+               ListWindow listWin = new ListWindow();
+               listWin.setVisible(true);
             }
          }
-      });
+      };
+
+      fetchBtn.addActionListener(fetchFile);
       fetchBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
       fetchBtn.setBounds(223, 110, 110, 29);
       contentPane.add(fetchBtn);
@@ -133,39 +136,18 @@ public class WelcomeWindow extends JFrame
       contentPane.add(progressStatusLabel);
 
       JButton restartBtn = new JButton("Restart");
-      restartBtn.addActionListener(new ActionListener()
-      {
-         public void actionPerformed(ActionEvent arg0)
-         {
-            if (!textField.getText().isEmpty())
-            {
-               String path = textField.getText();
-               path = path.replace("\\", "\\\\");
-               CSVHelper csvH = new CSVHelper();
-               
-               try
-               {
-                  csvH.readData(path);
-                  
-               }
-               catch (Exception e1)
-               {
-                  String errorM = e1.getMessage();
-                  textArea.setText(errorM);
-               }
-            }
-         }
-      });
+      restartBtn.addActionListener(fetchFile);
       restartBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
       restartBtn.setBounds(456, 197, 94, 29);
       contentPane.add(restartBtn);
+      
       textArea.setForeground(new Color(255, 0, 0));
       textArea.setBackground(UIManager.getColor("CheckBox.background"));
       textArea.setLineWrap(true);
 
       textArea.setBounds(27, 200, 396, 92);
       contentPane.add(textArea);
-      
+
       JProgressBar progressBar = new JProgressBar();
       progressBar.setStringPainted(true);
       progressBar.setBounds(138, 28, 285, 29);
