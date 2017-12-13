@@ -49,76 +49,45 @@ public class LoadToDatabaseStrategy1 implements ILoadToDatabase {
 	
 	}
 
-	public static void registerGeneralSurveyBatch(List<ResponseQA> collection, List<String> structure) throws SQLException{
-		
-		String [] struct=  structure.toArray(new String[structure.size()]);
-	
-		Set<String> idSet = new HashSet<String>(); 
-	
-		int count=0;
-		for(ResponseQA el: collection){
+	public static void registerGeneralSurveyBatch(List<ResponseQA> collection,
+			List<String> structure) throws SQLException {
+
+		String[] struct = structure.toArray(new String[structure.size()]);
+
+		Set<String> idSet = new HashSet<String>();
+
+		int count = 0;
+		for (ResponseQA el : collection) {
 			idSet.add(el.getSurveyInstanceID());
 		}
-		
+
 		for (String str : idSet) {
-			String [] information= new String [structure.size()];
-				for (ResponseQA el : collection) {
-					if (el.getSurveyInstanceID().equals(str)) {
-						information[count]= el.getAnswers().get(0);
-						count++;
-					}
+			String[] information = new String[structure.size()];
+			for (ResponseQA el : collection) {
+				if (el.getSurveyInstanceID().equals(str)) {
+					information[count] = el.getAnswers().get(0);
+					count++;
 				}
-				count=0;
-				for(int i=0; i<information.length; i++){
-					if(information[i].toString().length()>15)	
-					System.out.print(information[i].toString().substring(0, 15)+" | ");
-					else
-						System.out.print(information[i].toString() +" | ");
-					}
-				System.out.print("\n");
 			}
-//			System.out.println("PRINTING for " +count);
-//			for(int i=0; i<struct.length; i++){
-//			System.out.println(struct[i].toString()+" | ");
+			count = 0;
+//			for (int i = 0; i < information.length; i++) {
+//				if (information[i].toString().length() > 15)
+//					System.out.print(information[i].toString().substring(0, 15)
+//							+ " | ");
+//				else
+//					System.out.print(information[i].toString() + " | ");
 //			}
-			
+//			System.out.print("\n");
+			adapter.newGeneralSurvey(str, information, struct);
 		}
-		
-		
-		
-		
-	
-		
-//		List<ResponseQA> temp = new ArrayList<ResponseQA>();
-//		for(ResponseQA el: collection){
-//			temp.add(el);
+
+//		for (int i = 0; i < struct.length; i++) {
+//			if (struct[i].toString().length() > 15)
+//				System.out.print(struct[i].toString().substring(0, 15) + " | ");
+//			else
+//				System.out.print(struct[i].toString() + " | ");
 //		}
-//		
-//		System.out.println("collection: "+temp.size());
-//		String [] struct=  structure.toArray(new String[structure.size()]);
-//		System.out.println("struct: "+struct.length);
-//		String tempID="";
-//		String [] information= new String [struct.length];
-//		for(int i=0; i<struct.length; i++){
-//			for(int j=0; j<temp.size(); j++){
-//				ResponseQA item=temp.get(j);
-//				if(item.getQuestion().equals(struct[i])){
-//					information[i]= item.getAnswers().get(0);
-//					System.out.println("Adding: "+item.getAnswers().get(0));
-//					tempID= item.getSurveyInstanceID();
-//					temp.remove(item);
-//					break;
-//				}
-//			}
-//		}
-//		System.out.println("PRINTING");
-//		for(int i=0; i<struct.length; i++)
-//		System.out.print(struct[i]+" | ");
-//		for(int i=0; i<information.length; i++)
-//		System.out.print(information[i]+" | ");
-		//adapter.newGeneralSurvey(tempID, struct, information);
-//	}
-	
-	
+//		System.out.print("\n");
+	}
 
 }
