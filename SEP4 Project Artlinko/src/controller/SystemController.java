@@ -208,13 +208,13 @@ public class SystemController implements GlobalVar, StructDefinitionElements
    }
 
    // /TEST AREA
-   public static void main(String[] args)
+  /* public static void main(String[] args)
    {
       SystemController controller = new SystemController("no");
 
       controller
             .readSurveys(TESTPATH);
-      /* {PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER}; */
+       {PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER}; 
       HashMap<String, Boolean> properties = new HashMap<String, Boolean>();
       properties.put(TYPES[0], false);
       properties.put(TYPES[1], false);
@@ -237,5 +237,24 @@ public class SystemController implements GlobalVar, StructDefinitionElements
          e.printStackTrace();
       }
 
+   }*/
+   
+   public static void main(String[] args)
+   {
+      SystemController controller = new SystemController();
+      controller.readSurveys(TESTPATH);
+      
+      HashMap<String, Boolean> properties = new HashMap<String, Boolean>();
+      properties.put(TYPES[0], false);
+      properties.put(TYPES[1], false);
+      properties.put(TYPES[2], true);
+      properties.put(TYPES[3], true);
+      properties.put(TYPES[4], false);
+      properties.put(TYPES[5], false);
+      properties.put(TYPES[6], false);
+
+      List<ResponseQA> SGlist = controller.allResponses
+            .getByPropertyHM(properties);
    }
+   
 }

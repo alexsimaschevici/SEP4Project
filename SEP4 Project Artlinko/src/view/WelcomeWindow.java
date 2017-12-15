@@ -1,9 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Window;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -12,15 +8,13 @@ import java.awt.Label;
 import java.awt.Font;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
-import services.CSVHelper;
+import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -28,11 +22,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
 import java.awt.Color;
-import java.awt.SystemColor;
-import java.util.ArrayList;
 
 import javax.swing.UIManager;
-import javax.swing.JProgressBar;
 
 import config.GlobalVar;
 import controller.SystemController;
@@ -47,9 +38,6 @@ public class WelcomeWindow implements GlobalVar
    JLabel progressStatusLabel = new JLabel("");
    SystemController contr;
    JFrame frame;
-   
-
-   
 
    /**
     * Create the frame.
@@ -189,7 +177,7 @@ public class WelcomeWindow implements GlobalVar
    public void drawSecondPage()
    {
 
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
       frame.setBounds(100, 100, 949, 788);
       contentPane = new JPanel();
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -200,30 +188,42 @@ public class WelcomeWindow implements GlobalVar
       scrollPane.setBounds(38, 38, 860, 640);
       contentPane.add(scrollPane);
 
-      JTable table_1= new JTable();
+      JTable table_1 = new JTable();
       // table_1.getModel().addTableModelListener();
-       table_1.setColumnSelectionAllowed(true);
-       DataTable table = new DataTable(contr);
-       table_1 = new JTable(table.getData(), table.getColumns());
-       scrollPane.setViewportView(table_1);
-       
-      
+      table_1.setColumnSelectionAllowed(true);
+      DataTable table = new DataTable(contr);
+      table_1 = new JTable(table.getData(), table.getColumns());
+      scrollPane.setViewportView(table_1);
+
       JButton btnSave = new JButton("Finish");
       btnSave.setFont(new Font("Tahoma", Font.BOLD, 12));
       btnSave.addActionListener(new ActionListener()
       {
          public void actionPerformed(ActionEvent arg0)
          {
-            
             contr.saveNewProperties(table.getTableData());
+            int ret = JOptionPane
+                  .showConfirmDialog(null,
+                        "Transaction successful. Would you like to convert another survey file?");
+            if (ret == JOptionPane.YES_OPTION)
+            {
+               frame.getContentPane().removeAll();
+               frame.revalidate();
+               frame.repaint();
+               drawFirstPage();
+            }
+            else if (ret == JOptionPane.NO_OPTION)
+               System.exit(0);
          }
       });
       btnSave.setBounds(633, 702, 265, 36);
       contentPane.add(btnSave);
-      
+
       JButton btnBack = new JButton("Back");
-      btnBack.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent arg0) {
+      btnBack.addActionListener(new ActionListener()
+      {
+         public void actionPerformed(ActionEvent arg0)
+         {
             frame.getContentPane().removeAll();
             frame.revalidate();
             frame.repaint();
@@ -233,10 +233,7 @@ public class WelcomeWindow implements GlobalVar
       btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
       btnBack.setBounds(38, 702, 265, 36);
       contentPane.add(btnBack);
-     
-     
-      
-      
+
       contentPane = new JPanel();
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
