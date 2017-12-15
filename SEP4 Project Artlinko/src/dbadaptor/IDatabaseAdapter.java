@@ -81,7 +81,7 @@ public interface IDatabaseAdapter
 	 * @param surveyID
 	 * @throws SQLException
 	 */
-	public void newLQ(String[] categories, String question_text, String surveyID) throws SQLException;
+	public void newLQ(String[] categories, String question_text, String surveyID, String qID) throws SQLException;
 	/**
 	 * Insert new Layer Response
 	 * LQ_ID:	 			RETREIVE this as a result of that time you called newLQ(). it is the question ID.

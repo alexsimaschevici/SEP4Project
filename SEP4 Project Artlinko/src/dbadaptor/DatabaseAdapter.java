@@ -340,36 +340,36 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 	 * @see dbadaptor.IDatabaseAdapter#newLQ(java.lang.String[],
 	 * java.lang.String, java.lang.String)
 	 */
-	public void newLQ(String[] categories, String question_text, String surveyID)
+	public void newLQ(String[] categories, String question_text, String surveyID, String qId)
 			throws SQLException {
 		// Check if the question already exists
 		
-		String statement3 = "SELECT LQ_ID FROM LQUESTION"
-				+ " WHERE QuestionText = ?";
-		PreparedStatement st3 = conn.prepareStatement(statement3);
-		st3.setString(1, question_text);
-		
-		String targetLQ_ID = findID(st3, "LQ_ID");
-		st3.executeUpdate();
-		st3.close();
+//		String statement3 = "SELECT LQ_ID FROM LQUESTION"
+//				+ " WHERE QuestionText = ?";
+//		PreparedStatement st3 = conn.prepareStatement(statement3);
+//		st3.setString(1, question_text);
+//		
+//		String targetLQ_ID = findID(st3, "LQ_ID");
+//		st3.executeUpdate();
+//		st3.close();
 		
 		// If it doesn't exist, create a record for it.
-		if (targetLQ_ID == null) {
-			targetLQ_ID = IDGen.generateId();
+//		if (targetLQ_ID == null) {
+//			targetLQ_ID = IDGen.generateId();
 
 			// SAVE THIS ID SOMEWHERE. You'll need it when adding an answer.
 
 			String prepStatement8 = "INSERT INTO LQUESTION (LQ_ID, QuestionText) VALUES(?, ?)";
 
 			PreparedStatement st = conn.prepareStatement(prepStatement8);
-			st.setString(1, targetLQ_ID);
+			st.setString(1, qId);
 			st.setString(2, question_text);
 
 			// execute the preparedstatement
 			st.executeUpdate();
 			st.close();
 
-		}
+//		}
 
 		// Next, find out if each of the categories it references exists.
 		for (int i = 0; i < categories.length; i++) {
@@ -390,13 +390,13 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 
 				String prepStatement9 = "INSERT INTO LayerCategory (CategoryID, CategoryName) VALUES(?, ?)";
 
-				PreparedStatement st = conn.prepareStatement(prepStatement9);
-				st.setString(1, targetCategoryID);
-				st.setString(2, categories[i]);
+				PreparedStatement st12 = conn.prepareStatement(prepStatement9);
+				st12.setString(1, targetCategoryID);
+				st12.setString(2, categories[i]);
 
 				// execute the preparedstatement
-				st.executeUpdate();
-				st.close();
+				st12.executeUpdate();
+				st12.close();
 
 			}
 			// Create join record.
@@ -405,7 +405,7 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 					+ " AND LQ_ID= ?";
 			PreparedStatement st5 = conn.prepareStatement(statement5);
 			st5.setString(1, categories[i]);
-			st5.setString(2, targetLQ_ID);
+			st5.setString(2, qId);
 			
 			String targetCategoryID_join = findID(st5, "CategoryID");
 			st5.executeUpdate();
@@ -416,13 +416,13 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 			if (targetCategoryID_join == null) {
 				String prepStatement10 = "INSERT INTO FACT_LQUESTIONINCAT (CategoryID, LQ_ID) VALUES(?, ?)";
 
-				PreparedStatement st = conn.prepareStatement(prepStatement10);
-				st.setString(1, targetCategoryID);
-				st.setString(2, targetLQ_ID);
+				PreparedStatement st123 = conn.prepareStatement(prepStatement10);
+				st123.setString(1, targetCategoryID);
+				st123.setString(2, qId);
 
 				// execute the preparedstatement
-				st.executeUpdate();
-				st.close();
+				st123.executeUpdate();
+				st123.close();
 
 			}
 		}
@@ -432,7 +432,7 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 				+ " WHERE LQ_ID = ?"
 				+ " AND SurveyID = ?";
 		PreparedStatement st6 = conn.prepareStatement(statement6);
-		st6.setString(1, targetLQ_ID);
+		st6.setString(1, qId);
 		st6.setString(2, surveyID);
 		
 		String LQisInSurvey = findID(st6, "LQ_ID");
@@ -444,13 +444,13 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 		if (LQisInSurvey == null) {
 			String prepStatement11 = "INSERT INTO LQINSURVEY (SurveyID, LQ_ID) VALUES(?, ?)";
 
-			PreparedStatement st = conn.prepareStatement(prepStatement11);
-			st.setString(1, surveyID);
-			st.setString(2, targetLQ_ID);
+			PreparedStatement st13 = conn.prepareStatement(prepStatement11);
+			st13.setString(1, surveyID);
+			st13.setString(2, qId);
 
 			// execute the preparedstatement
-			st.executeUpdate();
-			st.close();
+			st13.executeUpdate();
+			st13.close();
 
 		}
 	}
@@ -462,31 +462,31 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 	 * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
 	 * java.lang.String)
 	 */
-	public void newLayerResponse(String LQ_ID, String answer, String surveyID,
-			String surveyInstanceID, String personID, String newLR_ID, String newLA_ID)
+	public void newLayerResponse(String LQ_ID,String answer,String surveyID,String surveyInstanceID,String personID,
+			String newLR_ID, String newLA_ID)
 			throws SQLException {
 
 		
 
 		// Check if the answer already exists
 		
-		String statement6 = "SELECT LA_ID FROM LayerAnswer"
-				+ " WHERE Answer = ?";
-		PreparedStatement st6 = conn.prepareStatement(statement6);
-		st6.setString(1, answer);		
-		
-		String targetLA_ID = findID(st6, "LA_ID");
-		st6.executeUpdate();
-		st6.close();
+//		String statement6 = "SELECT LA_ID FROM LayerAnswer"
+//				+ " WHERE Answer = ?";
+//		PreparedStatement st6 = conn.prepareStatement(statement6);
+//		st6.setString(1, answer);		
+//		
+//		String targetLA_ID = findID(st6, "LA_ID");
+//		st6.executeUpdate();
+//		st6.close();
 
 		
 		
-			targetLA_ID = newLA_ID;
+//			targetLA_ID = newLA_ID;
 
 			String prepStatement112 = "INSERT INTO LayerAnswer (LA_ID, Answer) VALUES(?, ?)";
 
 			PreparedStatement st21 = conn.prepareStatement(prepStatement112);
-			st21.setString(1, targetLA_ID);
+			st21.setString(1, newLA_ID);
 			st21.setString(2, answer);
 
 			// execute the preparedstatement
@@ -496,46 +496,46 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 		
 		// Add Answer to Question in General
 		
-		String statement7 = "SELECT LQ_ID FROM FACT_L_ATOQ"
-				+ " WHERE LQ_ID = ?"
-				+ " AND LA_ID = ?";
-		PreparedStatement st7 = conn.prepareStatement(statement7);
-		st7.setString(1, answer);
-		st7.setString(2, targetLA_ID);		
-		
-		String a2q = findID(st7, "LQ_ID");
-		st7.executeUpdate();
-		st7.close();
+//		String statement7 = "SELECT LQ_ID FROM FACT_L_ATOQ"
+//				+ " WHERE LQ_ID = ?"
+//				+ " AND LA_ID = ?";
+//		PreparedStatement st7 = conn.prepareStatement(statement7);
+//		st7.setString(1, answer);
+//		st7.setString(2, targetLA_ID);		
+//		
+//		String a2q = findID(st7, "LQ_ID");
+//		st7.executeUpdate();
+//		st7.close();
 
 		// If it doesn't exist, create a record for it.
-		if (a2q == null) {
+//		if (a2q == null) {
 			String prepStatement11 = "INSERT INTO FACT_L_ATOQ (LA_ID, LQ_ID) VALUES(?, ?)";
 
 			PreparedStatement st = conn.prepareStatement(prepStatement11);
-			st.setString(1, targetLA_ID);
+			st.setString(1, newLA_ID);
 			st.setString(2, LQ_ID);
 
 			// execute the preparedstatement
 			st.executeUpdate();
 			st.close();
 
-		}
+//		}
 
 		// CREATE RESPONSE
 
-		String prepStatement11 = "INSERT INTO FACT_LRESPONSE (LR_ID, PersonID, SurveyID, SurveyInstanceID, LQ_ID, LA_ID) VALUES( ? , ? , ? , ? , ? , ? )";
+		String prepStatement111 = "INSERT INTO FACT_LRESPONSE (LR_ID, PersonID, SurveyID, SurveyInstanceID, LQ_ID, LA_ID) VALUES( ? , ? , ? , ? , ? , ? )";
 
-		PreparedStatement st = conn.prepareStatement(prepStatement11);
-		st.setString(1, newLR_ID);
-		st.setString(2, personID);
-		st.setString(3, surveyID);
-		st.setString(4, surveyInstanceID);
-		st.setString(5, LQ_ID);
-		st.setString(6, targetLA_ID);
+		PreparedStatement st14 = conn.prepareStatement(prepStatement111);
+		st14.setString(1, newLA_ID);
+		st14.setString(2, personID);
+		st14.setString(3, surveyID);
+		st14.setString(4, surveyInstanceID);
+		st14.setString(5, LQ_ID);
+		st14.setString(6, newLA_ID);
 
 		// execute the preparedstatement
-		st.executeUpdate();
-		st.close();
+		st14.executeUpdate();
+		st14.close();
 
 
 

@@ -171,7 +171,7 @@ public void newLQ(SurveyResponsesCollection collection) throws SQLException {
 		String[] cat= {"general"};
 		for(ResponseQA el: collection.getSurveys() ){
 			if(el.getProperty(QUESTION)&&el.getProperty(OTHER)/*&&!tmp.contains(el.getQuestion())*/){
-				adapter.newLQ(cat, el.getQuestion(), el.getEntireSurveyID());
+				adapter.newLQ(cat, el.getQuestion(), el.getEntireSurveyID(), el.getQuestionID());
 			}
 		}
 		System.out.println("END new LQ");
