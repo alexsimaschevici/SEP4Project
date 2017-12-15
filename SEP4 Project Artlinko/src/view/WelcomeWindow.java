@@ -49,24 +49,7 @@ public class WelcomeWindow implements GlobalVar
    JFrame frame;
    
 
-   public static void main(String[] args)
-   {
-      EventQueue.invokeLater(new Runnable()
-      {
-         public void run()
-         {
-            try
-            {
-               WelcomeWindow frame = new WelcomeWindow(new SystemController());
-
-            }
-            catch (Exception e)
-            {
-               e.printStackTrace();
-            }
-         }
-      });
-   }
+   
 
    /**
     * Create the frame.
@@ -217,6 +200,14 @@ public class WelcomeWindow implements GlobalVar
       scrollPane.setBounds(38, 38, 860, 640);
       contentPane.add(scrollPane);
 
+      JTable table_1= new JTable();
+      // table_1.getModel().addTableModelListener();
+       table_1.setColumnSelectionAllowed(true);
+       DataTable table = new DataTable(contr);
+       table_1 = new JTable(table.getData(), table.getColumns());
+       scrollPane.setViewportView(table_1);
+       
+      
       JButton btnSave = new JButton("Finish");
       btnSave.setFont(new Font("Tahoma", Font.BOLD, 12));
       btnSave.addActionListener(new ActionListener()
@@ -224,7 +215,7 @@ public class WelcomeWindow implements GlobalVar
          public void actionPerformed(ActionEvent arg0)
          {
             
-            
+            contr.saveNewProperties(table.getTableData());
          }
       });
       btnSave.setBounds(633, 702, 265, 36);
@@ -243,13 +234,7 @@ public class WelcomeWindow implements GlobalVar
       btnBack.setBounds(38, 702, 265, 36);
       contentPane.add(btnBack);
      
-      JTable table_1= new JTable();
-     // table_1.getModel().addTableModelListener();
-      table_1.setColumnSelectionAllowed(true);
-      DataTable table = new DataTable(contr);
-      table_1 = new JTable(table.getData(), table.getColumns());
-      scrollPane.setViewportView(table_1);
-      
+     
       
       
       contentPane = new JPanel();

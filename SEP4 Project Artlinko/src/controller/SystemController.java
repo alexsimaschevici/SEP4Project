@@ -37,7 +37,7 @@ public class SystemController implements GlobalVar, StructDefinitionElements
    public SystemController()
    {
       this.tView = new View();
-    //  this.view = new WelcomeWindow(this);
+      this.view = new WelcomeWindow(this);
       this.allResponses = new SurveyResponsesCollection();
       structureID = new ArrayList<String>();
    }
