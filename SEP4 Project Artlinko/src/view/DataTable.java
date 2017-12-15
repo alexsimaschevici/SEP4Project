@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import config.GlobalVar;
@@ -122,19 +124,19 @@ public class DataTable extends AbstractTableModel implements TableModelListener
       return allData;
    };
 
-  /* // //TESTING AREA
-   public static void main(String[] args)
-   {
-      SystemController contr = new SystemController();
-      DataTable dt = new DataTable(contr);
-      contr.readSurveys("C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv");
-      String[][] allData = dt.getData();
-      System.out.println(contr.getStructForView());
-      System.out.println(dt.getRow(0));
-      System.out.println(dt.getTableData());
-   }*/
+   /*
+    * // //TESTING AREA public static void main(String[] args) {
+    * SystemController contr = new SystemController(); DataTable dt = new
+    * DataTable(contr); contr.readSurveys(
+    * "C:\\Users\\Cristi\\Documents\\Course Material\\SEM4\\SEP4\\SEP4D\\Original_data.csv"
+    * ); String[][] allData = dt.getData();
+    * System.out.println(contr.getStructForView());
+    * System.out.println(dt.getRow(0)); System.out.println(dt.getTableData()); }
+    */
 
-   /**Returns a list of strings with all the data from the JTable
+   /**
+    * Returns a list of strings with all the data from the JTable
+    * 
     * @return
     */
    public List<String> getTableData()
@@ -151,5 +153,8 @@ public class DataTable extends AbstractTableModel implements TableModelListener
       // TODO Auto-generated method stub
 
    }
+
+  
+   
 
 }

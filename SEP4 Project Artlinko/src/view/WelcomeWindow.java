@@ -7,13 +7,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Label;
 import java.awt.Font;
 
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
 import javax.swing.JLabel;
 
 import java.awt.event.ActionListener;
@@ -190,9 +190,12 @@ public class WelcomeWindow implements GlobalVar
 
       JTable table_1 = new JTable();
       // table_1.getModel().addTableModelListener();
-      table_1.setColumnSelectionAllowed(true);
       DataTable table = new DataTable(contr);
+      table_1.setColumnSelectionAllowed(true);
+      table_1.setRowSelectionAllowed(true);
+      
       table_1 = new JTable(table.getData(), table.getColumns());
+      table_1.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);;
       scrollPane.setViewportView(table_1);
 
       JButton btnSave = new JButton("Finish");
@@ -207,6 +210,7 @@ public class WelcomeWindow implements GlobalVar
                         "Transaction successful. Would you like to convert another survey file?");
             if (ret == JOptionPane.YES_OPTION)
             {
+              
                frame.getContentPane().removeAll();
                frame.revalidate();
                frame.repaint();
@@ -238,5 +242,7 @@ public class WelcomeWindow implements GlobalVar
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
    }
+   
+   
 
 }
