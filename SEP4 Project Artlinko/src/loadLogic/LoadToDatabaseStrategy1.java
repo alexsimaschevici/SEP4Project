@@ -199,7 +199,7 @@ public void newSGResponse(SurveyResponsesCollection collection) throws SQLExcept
 	List<String> tmp= new ArrayList<String>();
 	for(ResponseQA el: collection.getSurveys() ){
 		if(el.getProperty(QUESTION)&&el.getProperty(SGD)/*&&!tmp.contains(el.getQuestion())*/){
-			adapter.newSGQ(el.getOtherColumnName(), el.getQuestion(), el.getEntireSurveyID());
+			adapter.newSGResponse(el.getQuestionID(), el.getAnswers().get(0), el.getEntireSurveyID(), el.getSurveyInstanceID(), el.getSurveyInstanceID(), el.getAnswerID());
 		}
 	}
 	System.out.println("END new SGQ");

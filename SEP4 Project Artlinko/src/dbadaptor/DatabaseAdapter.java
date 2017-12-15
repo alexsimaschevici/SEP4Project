@@ -366,7 +366,12 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 			st.setString(2, question_text);
 
 			// execute the preparedstatement
+			try{
 			st.executeUpdate();
+			}
+			catch (Exception e)
+			{
+			}
 			st.close();
 
 //		}
@@ -466,23 +471,6 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 			String newLR_ID, String newLA_ID)
 			throws SQLException {
 
-		
-
-		// Check if the answer already exists
-		
-//		String statement6 = "SELECT LA_ID FROM LayerAnswer"
-//				+ " WHERE Answer = ?";
-//		PreparedStatement st6 = conn.prepareStatement(statement6);
-//		st6.setString(1, answer);		
-//		
-//		String targetLA_ID = findID(st6, "LA_ID");
-//		st6.executeUpdate();
-//		st6.close();
-
-		
-		
-//			targetLA_ID = newLA_ID;
-
 			String prepStatement112 = "INSERT INTO LayerAnswer (LA_ID, Answer) VALUES(?, ?)";
 
 			PreparedStatement st21 = conn.prepareStatement(prepStatement112);
@@ -495,20 +483,6 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 
 		
 		// Add Answer to Question in General
-		
-//		String statement7 = "SELECT LQ_ID FROM FACT_L_ATOQ"
-//				+ " WHERE LQ_ID = ?"
-//				+ " AND LA_ID = ?";
-//		PreparedStatement st7 = conn.prepareStatement(statement7);
-//		st7.setString(1, answer);
-//		st7.setString(2, targetLA_ID);		
-//		
-//		String a2q = findID(st7, "LQ_ID");
-//		st7.executeUpdate();
-//		st7.close();
-
-		// If it doesn't exist, create a record for it.
-//		if (a2q == null) {
 			String prepStatement11 = "INSERT INTO FACT_L_ATOQ (LA_ID, LQ_ID) VALUES(?, ?)";
 
 			PreparedStatement st = conn.prepareStatement(prepStatement11);
@@ -526,15 +500,20 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 		String prepStatement111 = "INSERT INTO FACT_LRESPONSE (LR_ID, PersonID, SurveyID, SurveyInstanceID, LQ_ID, LA_ID) VALUES( ? , ? , ? , ? , ? , ? )";
 
 		PreparedStatement st14 = conn.prepareStatement(prepStatement111);
-		st14.setString(1, newLA_ID);
-		st14.setString(2, personID);
-		st14.setString(3, surveyID);
+		st14.setString(1, IDGen.generateId());
+		st14.setString(2, surveyInstanceID);
+		st14.setString(3, surveyInstanceID);
 		st14.setString(4, surveyInstanceID);
 		st14.setString(5, LQ_ID);
 		st14.setString(6, newLA_ID);
 
 		// execute the preparedstatement
-		st14.executeUpdate();
+		try {
+			st14.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
 		st14.close();
 
 
@@ -553,72 +532,53 @@ public class DatabaseAdapter implements IDatabaseAdapter {
 			throws SQLException {
 
 
-		// Check if the answer already exists
-		String statement7 = "SELECT SGA_ID FROM StandardGraphAnswer"
-				+ "WHERE Answer = ? ";
-		PreparedStatement st7 = conn.prepareStatement(statement7);
-		st7.setString(1, answer);		
-		String targetSGA_ID = findID(st7, "SGA_ID");
-		
-		st7.executeUpdate();
-		st7.close();
 
-		
-		// If it doesn't exist, create a record for it.
-		if (targetSGA_ID == null) {
-			targetSGA_ID = IDGen.generateId();
-
-			String prepStatement11 = "INSERT INTO StandardGraphAnswer (SGA_ID, Answer) VALUES( ? , ? )";
+			String prepStatement11 = "INSERT INTO SGANSWER (SGA_ID, Answer) VALUES( ? , ? )";
 
 			PreparedStatement st = conn.prepareStatement(prepStatement11);
-			st.setString(1, targetSGA_ID);
+			st.setString(1, newSGR_ID);
 			st.setString(2, answer);
 
 			// execute the preparedstatement
 			st.executeUpdate();
 			st.close();
 
-		}
-		// Add Answer to Question in General
-		String statement8 = "SELECT SGQ_ID FROM fact_StandardGraphAnswerToQuestion"
-				+ " WHERE SGQ_ID = ?"
-				+ " AND SGA_ID = ?";
-		PreparedStatement st8 = conn.prepareStatement(statement8);
-		st8.setString(1, SGQ_ID);
-		st8.setString(2, targetSGA_ID);
-		
-		String a2q = findID(st8, "SGQ_ID");
-		st8.executeUpdate();
-		st8.close();
-		
-		// If it doesn't exist, create a record for it.
-		if (a2q == null) {
-			String prepStatement11 = "INSERT INTO fact_StandardGraphAnswerToQuestion (SGA_ID, SGQ_ID) VALUES( ? , ? )";
+			String prepStatement112 = "INSERT INTO FACT_SGA_ATOQ (SGA_ID, SGQ_ID) VALUES( ? , ? )";
 
-			PreparedStatement st = conn.prepareStatement(prepStatement11);
-			st.setString(1, targetSGA_ID);
-			st.setString(2, SGQ_ID);
+			PreparedStatement st2 = conn.prepareStatement(prepStatement112);
+			st2.setString(1, newSGR_ID);
+			st2.setString(2, SGQ_ID);
 
 			// execute the preparedstatement
-			st.executeUpdate();
-			st.close();
+			try {
+				st2.executeUpdate();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				System.out.println(e1.getMessage());
+			}
+			st2.close();
 
-		}
+//		}
 
 		// CREATE RESPONSE
 
-		String prepStatement11 = "INSERT INTO fact_StandardGraphResponse (SGR_ID, PersonID, SurveyID, SurveyInstanceID, SGQ_ID, SGA_ID) VALUES( ? , ? , ? , ? , ? , ? )";
+		String prepStatement1122 = "INSERT INTO FACT_SGRESPONSE (SGR_ID, PersonID, SurveyID, SurveyInstanceID, SGQ_ID, SGA_ID) VALUES( ? , ? , ? , ? , ? , ? )";
 
-		PreparedStatement st = conn.prepareStatement(prepStatement11);
-		st.setString(1, newSGR_ID);
-		st.setString(2, personID);
-		st.setString(3, surveyID);
-		st.setString(4, surveyInstanceID);
-		st.setString(5, SGQ_ID);
-		st.setString(6, targetSGA_ID);
+		PreparedStatement st12 = conn.prepareStatement(prepStatement1122);
+		st12.setString(1, newSGR_ID);
+		st12.setString(2, personID);
+		st12.setString(3, surveyID);
+		st12.setString(4, surveyInstanceID);
+		st12.setString(5, SGQ_ID);
+		st12.setString(6, newSGR_ID);
 
 		// execute the preparedstatement
-		st.executeUpdate();
+		try {
+			st.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
 		st.close();
 
 

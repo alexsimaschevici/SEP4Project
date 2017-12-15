@@ -256,6 +256,13 @@ public class SystemController implements GlobalVar, StructDefinitionElements {
 			e.printStackTrace();
 		}
 		
+		try {
+			load.newSGResponse(col);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		
 		DatabaseConnection.closeConnection();
