@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import java.awt.Label;
 import java.awt.Font;
 
 import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -32,9 +34,10 @@ import java.util.ArrayList;
 import javax.swing.UIManager;
 import javax.swing.JProgressBar;
 
+import config.GlobalVar;
 import controller.SystemController;
 
-public class WelcomeWindow
+public class WelcomeWindow implements GlobalVar
 {
 
    private JPanel contentPane;
@@ -44,6 +47,26 @@ public class WelcomeWindow
    JLabel progressStatusLabel = new JLabel("");
    SystemController contr;
    JFrame frame;
+   
+
+   public static void main(String[] args)
+   {
+      EventQueue.invokeLater(new Runnable()
+      {
+         public void run()
+         {
+            try
+            {
+               WelcomeWindow frame = new WelcomeWindow(new SystemController());
+
+            }
+            catch (Exception e)
+            {
+               e.printStackTrace();
+            }
+         }
+      });
+   }
 
    /**
     * Create the frame.
@@ -104,15 +127,13 @@ public class WelcomeWindow
       restartBtn.setBounds(356, 197, 94, 29);
       contentPane.add(restartBtn);
 
-      
       JButton browseBtn = new JButton("Browse...");
       browseBtn.addActionListener(new ActionListener()
       {
          public void actionPerformed(ActionEvent arg0)
          {
             JFileChooser fc = new JFileChooser();
-            fc.setCurrentDirectory(new java.io.File(
-                  "C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv"));
+            fc.setCurrentDirectory(new java.io.File(TESTPATH));
             fc.setDialogTitle("File Browser.");
             fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             fetchBtn.setEnabled(true);
@@ -128,7 +149,6 @@ public class WelcomeWindow
       browseBtn.setBounds(455, 61, 94, 29);
       contentPane.add(browseBtn);
 
-
       ActionListener fetchFile = new ActionListener()
       {
          public void actionPerformed(ActionEvent e)
@@ -142,7 +162,7 @@ public class WelcomeWindow
                   contr.readSurveys(path);
                   progressStatusLabel.setText("File fetched successfully!");
                   nextBtn.setEnabled(true);
-                  
+
                }
                catch (Exception e2)
                {
@@ -182,34 +202,59 @@ public class WelcomeWindow
    {
       textArea.setText("Error Loading File. Check file path");
    }
-   
 
-   public void drawSecondPage(){
+   public void drawSecondPage()
+   {
+
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      frame.setBounds(100, 100, 946, 581);
+      frame.setBounds(100, 100, 949, 788);
       contentPane = new JPanel();
       contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
       frame.setContentPane(contentPane);
       contentPane.setLayout(null);
-      
-      ArrayList<String> list = (ArrayList<String>) contr.getStructForView();
-      
-      System.out.println(list);
-      DataTableModel model = new DataTableModel(); 
-      JTable table = new JTable(model);
-      table.setBounds(10, 24, 896, 408);
-      contentPane.add(table);
-      
-      JButton btnNewButton = new JButton("Populate Table");
-      btnNewButton.addActionListener(new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            model.getAllStruct(contr);
-            model.populateTable( model.getRowData());
-            model.fireTableDataChanged();
+
+      JScrollPane scrollPane = new JScrollPane();
+      scrollPane.setBounds(38, 38, 860, 640);
+      contentPane.add(scrollPane);
+
+      JButton btnSave = new JButton("Finish");
+      btnSave.setFont(new Font("Tahoma", Font.BOLD, 12));
+      btnSave.addActionListener(new ActionListener()
+      {
+         public void actionPerformed(ActionEvent arg0)
+         {
+            
+            
          }
       });
-      btnNewButton.setBounds(330, 477, 225, 23);
-      contentPane.add(btnNewButton);
+      btnSave.setBounds(633, 702, 265, 36);
+      contentPane.add(btnSave);
+      
+      JButton btnBack = new JButton("Back");
+      btnBack.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent arg0) {
+            frame.getContentPane().removeAll();
+            frame.revalidate();
+            frame.repaint();
+            drawFirstPage();
+         }
+      });
+      btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
+      btnBack.setBounds(38, 702, 265, 36);
+      contentPane.add(btnBack);
+     
+      JTable table_1= new JTable();
+     // table_1.getModel().addTableModelListener();
+      table_1.setColumnSelectionAllowed(true);
+      DataTable table = new DataTable(contr);
+      table_1 = new JTable(table.getData(), table.getColumns());
+      scrollPane.setViewportView(table_1);
+      
+      
+      
+      contentPane = new JPanel();
+      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
    }
 
 }

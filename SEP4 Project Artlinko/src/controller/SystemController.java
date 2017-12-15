@@ -20,13 +20,16 @@ import model.SurveyResponsesCollection;
  * 
  * @author Alexandru
  */
-<<<<<<< HEAD
+
+/**
+ * @author Cristi
+ */
 public class SystemController implements GlobalVar, StructDefinitionElements
 {
 
    private View tView;
    private WelcomeWindow view;
-   private List<String> structure = null;
+   private static List<String> structure = null;
    private List<String> structureID;
    private SurveyResponsesCollection allResponses;
    private List<List<String>> allData = null;
@@ -34,7 +37,14 @@ public class SystemController implements GlobalVar, StructDefinitionElements
    public SystemController()
    {
       this.tView = new View();
-      this.view = new WelcomeWindow(this);
+    //  this.view = new WelcomeWindow(this);
+      this.allResponses = new SurveyResponsesCollection();
+      structureID = new ArrayList<String>();
+   }
+
+   public SystemController(String no)
+   {
+      this.tView = new View();
       this.allResponses = new SurveyResponsesCollection();
       structureID = new ArrayList<String>();
    }
@@ -46,47 +56,35 @@ public class SystemController implements GlobalVar, StructDefinitionElements
    public void readSurveys(String path)
    {
 
-      // read all data from file
       try
       {
          allData = CSVHELPER.readSurveys(path);
-
       }
       catch (Exception E)
       {
-         // HANDLE READING EXCEPTION FROM FILE AND DISPLAY IN GUI
       }
 
-      // retrieve structure and remove from extract
       this.structure = CSVHELPER.getSurveyStructure(allData);
       allData.remove(0);
 
-      // Assign extract all id
       String entireSurveyID = IDGen.generateId();
 
-      // Assign ids to all question of the structure
       List<String> strucureIdCollection = IDGen.assignIdToStruct(structure);
 
-      // Process data into ResponseQA objects
       boolean structComplete = false;
       for (List<String> subList : allData)
       {
-
-         // Assign ID to each row
          String surveyInstaceID = IDGen.generateId();
 
          for (int i = 0; i < subList.size(); i++)
          {
             ArrayList<String> answers = new ArrayList<String>();
 
-            // Response validator adds n/a into blanc cells
             DataValidator.fixEmptyResponses(answers, subList.get(i));
 
-            // Question validator removes question refference before ":"
             String procQuestion = DataValidator.fixQuestionBody(structure
                   .get(i));
 
-            // Finalize and add to all responses
             ResponseQA resp = new ResponseQA(answers, procQuestion,
                   strucureIdCollection.get(i), surveyInstaceID, entireSurveyID);
             allResponses.addSurvey(resp);
@@ -96,8 +94,6 @@ public class SystemController implements GlobalVar, StructDefinitionElements
          }
          structComplete = true;
       }
-
-      // assign types to e
       tView.getTypesAssigned(structure, allResponses);
    }
 
@@ -116,34 +112,34 @@ public class SystemController implements GlobalVar, StructDefinitionElements
          // add question id
          temp = allResponses.getColumn(structureID.get(i)).get(0)
                .getQuestionID()
-               + ":";
+               + " : ";
          // add question body
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getQuestion()
-               + ":";
+               + " : ";
          // add answer body
          temp += allResponses.getColumn(structureID.get(i)).get(0).getAnswers()
                .get(0)
-               + ":";
+               + " : ";
          // add each property value
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[0])
-               + ":";
+               + " : ";
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[1])
-               + ":";
+               + " : ";
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[2])
-               + ":";
+               + " : ";
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[3])
-               + ":";
+               + " : ";
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[4])
-               + ":";
+               + " : ";
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[6])
-               + ":";
+               + " : ";
          temp += allResponses.getColumn(structureID.get(i)).get(0)
                .getProperty(TYPES[5]);
          ret.add(temp);
@@ -194,189 +190,52 @@ public class SystemController implements GlobalVar, StructDefinitionElements
       return allResponses;
    }
 
-   // TEST MAIN
+   /**
+    * Fetches the structure of the survey and passes it into a String array
+    * 
+    * @return
+    */
+   // ///REDUNDANT ???????????????????????????
+   public String[] getColNames()
+   {
+      String[] colName = new String[structure.size()];
+      List<String> columns = structure;
+      for (int i = 0; i < columns.size(); i++)
+      {
+         colName[i] = columns.get(i);
+      }
+      return colName;
+   }
+
+   // /TEST AREA
    public static void main(String[] args)
    {
-      SystemController controller = new SystemController();
+      SystemController controller = new SystemController("no");
 
-      // controller.readSurveys("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv");
-      // controller.displaySurveys();
+      controller
+            .readSurveys(TESTPATH);
+      /* {PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER}; */
+      HashMap<String, Boolean> properties = new HashMap<String, Boolean>();
+      properties.put(TYPES[0], false);
+      properties.put(TYPES[1], false);
+      properties.put(TYPES[2], true);
+      properties.put(TYPES[3], true);
+      properties.put(TYPES[4], false);
+      properties.put(TYPES[5], false);
+      properties.put(TYPES[6], false);
+
+      List<ResponseQA> SGlist = controller.allResponses
+            .getByPropertyHM(properties);
+
+      try
+      {
+         LoadToDatabaseStrategy1.registerGeneralSurveyBatch(SGlist, structure);
+      }
+      catch (SQLException e)
+      {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
 
    }
-=======
-public class SystemController implements GlobalVar, StructDefinitionElements {
-
-	private View tView;
-	private WelcomeWindow view;
-	private static List<String> structure = null;
-	private List<String> structureID;
-	private SurveyResponsesCollection allResponses;
-	private List<List<String>> allData = null;
-
-	public SystemController() {
-		this.tView = new View();
-		this.view= new WelcomeWindow(this);
-		this.allResponses = new SurveyResponsesCollection();
-		structureID= new ArrayList<String>();
-	}
-	
-	public SystemController(String no) {
-		this.tView = new View();
-		this.allResponses = new SurveyResponsesCollection();
-		structureID= new ArrayList<String>();
-	}
-
-	
-	/**
-	 * Builds up the survey structure in local memory as objects of type ResponseQA 
-	 */
-	public void readSurveys(String path) {
-
-		// read all data from file
-		try{
-		allData = CSVHELPER.readSurveys(path);
-		  
-		}
-		catch(Exception E){
-			//HANDLE READING EXCEPTION FROM FILE AND DISPLAY IN GUI
-		  	}
-		
-		// retrieve structure and remove from extract 
-		this.structure = CSVHELPER.getSurveyStructure(allData);
-		allData.remove(0);	
-		
-		//Assign extract all id
-		String entireSurveyID = IDGen.generateId();
-		
-		//Assign ids to all question of the structure
-		List<String> strucureIdCollection = IDGen.assignIdToStruct(structure);
-		
-		// Process data into ResponseQA objects
-		boolean structComplete=false;
-		for (List<String> subList : allData) {
-			
-			//Assign ID to each row
-			String surveyInstaceID = IDGen.generateId();
-
- 			for (int i = 0; i < subList.size(); i++) {
-				ArrayList<String> answers = new ArrayList<String>();
-				
-				// Response validator adds n/a into blanc cells
-				DataValidator.fixEmptyResponses(answers, subList.get(i));	
-				
-				//Question validator removes question refference before ":"
-				String procQuestion= DataValidator.fixQuestionBody(structure.get(i));
-				
-				//Finalize and add to all responses
-				ResponseQA resp= new ResponseQA(answers, procQuestion,
-						strucureIdCollection.get(i),
-						surveyInstaceID, entireSurveyID);
-				allResponses.addSurvey(resp);
-				
-				if(!structComplete)
-				structureID.add(i,strucureIdCollection.get(i));
-			}
- 			structComplete=true;
-		}
-
-		// assign types to e
-		tView.getTypesAssigned(structure,allResponses);
-	}
-	
-	
-
-	/**
-	 * Builds the strings for displaying the structure (requested by the view to show in the list)
-	 * @return
-	 */
-	public List<String> getStructForView(){
-		List<String> ret= new ArrayList<String>();
-		String temp ="";
-		for(int i=0; i<structureID.size(); i++){
-			//add question id
-			temp= allResponses.getColumn(structureID.get(i)).get(0).getQuestionID()+":";
-			//add question body
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getQuestion()+":";
-			//add answer body
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getAnswers().get(0)+":";
-			//add each property value
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[0])+":";
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[1])+":";
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[2])+":";
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[3])+":";
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[4])+":";
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[6])+":";
-			temp+=allResponses.getColumn(structureID.get(i)).get(0).getProperty(TYPES[5]);
-			ret.add(temp);
-		}
-		return ret;
-	}
-	
-	
-	/**
-	 * Method assigns values to the properties in each response
-	 * @param ans
-	 */
-	public long saveNewProperties(List<String> ans){
-		long count=0;
-		for(int i=0; i<ans.size(); i++){
-			for(ResponseQA item : allResponses.getColumn(ans.get(i).split(":")[0])){
-				String [] temp=ans.get(i).split(":");
-				item.setProperty(TYPES[0], Boolean.getBoolean(temp[2]));
-				item.setProperty(TYPES[1], Boolean.getBoolean(temp[3]));
-				item.setProperty(TYPES[2], Boolean.getBoolean(temp[4]));
-				item.setProperty(TYPES[3], Boolean.getBoolean(temp[5]));
-				item.setProperty(TYPES[4], Boolean.getBoolean(temp[6]));
-				item.setProperty(TYPES[5], Boolean.getBoolean(temp[7]));
-				item.setProperty(TYPES[6], Boolean.getBoolean(temp[8]));
-				item.setOtherColumnName(temp[9]);
-				count++;
-			}
-		}
-		return count;
-	}
-	
-	
-	///TEST OUTPUT SURVEYS
-	public void displaySurveys() {
-		for (int i=0; i<allResponses.size(); i++) {
-			System.out.println(allResponses.getSurvey(i).toString());
-		}
-	}
-	
-	//TEST RETURN READING RESULTS TO BE CHECKED
-	public SurveyResponsesCollection getAllResponsesCollection(){
-	return allResponses;
-	}
-	
-
-	//TEST MAIN
-	public static void main(String[] args) {
-		SystemController controller = new SystemController("no");
-
-		controller.readSurveys("C:\\SCHOOL\\SEP4\\Resources\\Surveys\\Original_data.csv");
-		/*{PERSON, QUESTION, SURVEY, GENERAL, INSTANCE, SGD, OTHER};*/
-		HashMap<String, Boolean> properties = new HashMap<String, Boolean>();
-		properties.put(TYPES[0], false);
-		properties.put(TYPES[1], false);
-		properties.put(TYPES[2], true);
-		properties.put(TYPES[3], true);
-		properties.put(TYPES[4], false);
-		properties.put(TYPES[5], false);
-		properties.put(TYPES[6], false);
-		
-		List<ResponseQA> SGlist = controller.allResponses.getByPropertyHM(properties);
-		
-		try {
-			LoadToDatabaseStrategy1.registerGeneralSurveyBatch(SGlist, structure);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//controller.displaySurveys();
-
-	}
->>>>>>> 1db7ae16d5fe2c7b5da2c9fa306b8d13c159e28c
-
 }

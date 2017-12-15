@@ -23,7 +23,7 @@ public class CSVHelper implements GlobalVar
 
    private String filePath;
 
-/**
+   /**
     * Parses the lines from the files Returns a null when the input stream is
     * empty
     * 
@@ -138,7 +138,7 @@ public class CSVHelper implements GlobalVar
          lineNum++;
          progressStatus = lineNum / totalLines * 100;
          progressData.add(progressStatus + "%");
-      
+
       }
 
       return progressData;
@@ -158,7 +158,7 @@ public class CSVHelper implements GlobalVar
 
    public List<List<String>> readSurveys(String path)
    {
-	  this.filePath=path; 
+      this.filePath = path;
       List<List<String>> list = null;
       try
       {
