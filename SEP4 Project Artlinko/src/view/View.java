@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import model.ResponseQA;
 import model.SurveyResponsesCollection;
 import config.GlobalVar;
 import config.StructDefinitionElements;
@@ -39,13 +40,34 @@ public class View implements GlobalVar, StructDefinitionElements{
 			SurveyResponsesCollection allResponses) {
 		// TODO Auto-generated method stub
 		
+		
+		int count=0;
 		for (int j=0; j<allResponses.size(); j++){
-//			if (j < 20)
-//			allResponses.getSurvey(j).setProperty(PERSON, true);
-//			else if(j>20&&j<60){
+		   if (count <=1){
 				allResponses.getSurvey(j).setProperty(SURVEY, true);
 				allResponses.getSurvey(j).setProperty(GENERAL, true);
-//			}
+		   }
+		   else if (count>1 && count<=9){
+			   allResponses.getSurvey(j).setProperty(SURVEY, true);
+				allResponses.getSurvey(j).setProperty(INSTANCE, true);
+		   }
+		   
+		   else if(count>9 && count<=11){
+			   allResponses.getSurvey(j).setProperty(QUESTION, true);
+				allResponses.getSurvey(j).setProperty(OTHER, true);
+		   }
+		   else if(count>11 && count<=17){
+			   allResponses.getSurvey(j).setProperty(QUESTION, true);
+				allResponses.getSurvey(j).setProperty(SGD, true);
+				allResponses.getSurvey(j).setOtherColumnName("TEST");
+		   }
+		   else if(count>25 && count<=100){
+			   allResponses.getSurvey(j).setProperty(PERSON, true);
+		   }
+		   count++;
+		   if(count>=structure.size())
+			   count=0;
+		   
 	}
 	}
 	

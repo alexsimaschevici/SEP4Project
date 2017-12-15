@@ -34,7 +34,7 @@ public class DatabaseConnection implements DatabaseConnectionConfig {
 
 			conn = DriverManager.getConnection(connectString, userName, password);
 			conn.setAutoCommit(false);
-			System.out.println("connection established, autocommit off");
+			//System.out.println("connection established, autocommit off");
 
 
 		} catch (SQLException e) {
@@ -52,8 +52,9 @@ public class DatabaseConnection implements DatabaseConnectionConfig {
 	
 	public static void closeConnection(){
 		try {
+			conn.commit();
 			conn.close();
-			System.out.println("connection closed");
+			//System.out.println("connection closed");
 		
 
 		} catch (SQLException e) {

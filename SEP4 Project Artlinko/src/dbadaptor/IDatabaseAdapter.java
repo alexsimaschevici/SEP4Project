@@ -3,6 +3,9 @@ package dbadaptor;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import model.ResponseQA;
 
 
 /**
@@ -41,7 +44,8 @@ public interface IDatabaseAdapter
 	 * @param values
 	 * @throws SQLException
 	 */
-	public void newGeneralSurvey(String nextSurveyID, String[] column_names, String[] values) throws SQLException;
+	public void newGeneralSurvey(String nextSurveyID, List<String> column_names,
+			List<ResponseQA> values) throws SQLException ;
 	/**
 	 * Insert new Survey Instance
 	 * nextSurveyId: auto-generated unique ID
@@ -53,8 +57,8 @@ public interface IDatabaseAdapter
 	 * @param values
 	 * @throws SQLException
 	 */
-	public void newSurveyInstance(String nextSurveyID,String nextPersonID,String nextSurveyInstanceID,String[] column_names, 
-			  String[] values) throws SQLException;
+	public void newSurveyInstance(String nextSurveyID,String nextPersonID,String nextSurveyInstanceID,List<String> column_names,
+			List<ResponseQA> values) throws SQLException;
 	/**
 	 * Insert new Standard Graph Question
 	 * dimension_name: 	Just a string-- for example "I/We", or whatever the user happened to type in as the GRAPH dimension to use
@@ -94,7 +98,7 @@ public interface IDatabaseAdapter
 	 * @throws SQLException
 	 */
 	public void newLayerResponse(String LQ_ID,String answer,String surveyID,String surveyInstanceID,String personID,
-			String newLR_ID) throws SQLException;
+			String newLR_ID, String newLA_ID) throws SQLException;
 	/**
 	 * LQ_ID:	 			RETREIVE this as a result of that time you called newLQ(). it is the question ID.
 	 * SurveyID:			Batch survey ID
