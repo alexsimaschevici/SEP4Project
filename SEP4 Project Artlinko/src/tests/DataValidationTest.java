@@ -28,12 +28,14 @@ public class DataValidationTest implements GlobalVar
 
    DataValidator dv = new DataValidator();
 
+   /**We're performing different tests, to check data-types 
+    * and/or formats
+    */
    @Test
    public void doubleValidation()
    {
       answers.add("-12.5");
       answers.add("-12");
-  //    ResponseQA res = new ResponseQA(answers, "What's the temperature?");
       boolean result = dv.isDouble(RESPQA);
       assertEquals(invalid, result);
    }
@@ -43,7 +45,6 @@ public class DataValidationTest implements GlobalVar
    {
       answers.add("18-24");
       answers.add("-12");
-   //   ResponseQA res = new ResponseQA(answers, "What's your age?");
       boolean result = dv.isRange(RESPQA);
       assertEquals(valid, result);
    }
@@ -52,7 +53,6 @@ public class DataValidationTest implements GlobalVar
    public void longValidation()
    {
       answers.add("-12.3");
-    //  ResponseQA res = new ResponseQA(answers, "What's the temperature?");
       boolean result = dv.isLong(RESPQA);
       assertEquals(invalid, result);
    }
@@ -61,7 +61,6 @@ public class DataValidationTest implements GlobalVar
    public void currValReturnValidation()
    {
       answers.add("under $70,000");
-      //ResponseQA res = new ResponseQA(answers, "What's your salary?");
       ArrayList<Long> result = dv.returnCurrValues(RESPQA);
       assertEquals(valueList, result);
    }
@@ -69,7 +68,6 @@ public class DataValidationTest implements GlobalVar
    @Test
    public void isSGDValidation(){
       answers.add("Strongly Agree");
-      //ResponseQA res = new ResponseQA(answers, "Do you agree?");
       boolean result = dv.isSGD(RESPQA);
       assertEquals(invalid, result);
    }
@@ -80,7 +78,6 @@ public class DataValidationTest implements GlobalVar
       answers.add("");
       answers.add("");
       answers.add("Other - Write in (Required)");
-      //ResponseQA res = new ResponseQA(answers, "What's the temperature?");
       boolean result = dv.isOtherQA(RESPQA);
       assertEquals(invalid, result);
    }

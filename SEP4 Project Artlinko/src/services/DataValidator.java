@@ -12,8 +12,10 @@ import model.ResponseQA;
 public class DataValidator implements GlobalVar
 {
 
-   // checks if the first element of the answer from a given RsponseQA
-   // that's not empty is a double
+   /**checks if the first element of the answer from a given RsponseQA that's not empty is a double
+    * @param response
+    * @return
+    */
    public boolean isDouble(ResponseQA response)
    {
       int i = 0;
@@ -39,7 +41,11 @@ public class DataValidator implements GlobalVar
 
    }
 
-   // checks if the ResponseQA is an SGD question-response
+    
+   /**checks if the ResponseQA is an SGD question-response
+    * @param response
+    * @return
+    */
    public boolean isSGD(ResponseQA response)
    {
 
@@ -48,8 +54,10 @@ public class DataValidator implements GlobalVar
       return (str.contains("agree") || str.contains("neutral"));
    }
 
-   // checks if the answers to the ResponseQA are of format
-   // "Other - Write in (Required)"
+   /**checks if the answers to the ResponseQA are of format "Other - Write in (Required)"
+    * @param response
+    * @return
+    */
    public boolean isOtherQA(ResponseQA response)
    {
       boolean valid = false;
@@ -85,8 +93,10 @@ public class DataValidator implements GlobalVar
 
    }
 
-   // checks if the first element of the answer from a given RsponseQA object is
-   // a range
+   /**checks if the first element of the answer from a given RsponseQA object is a range
+    * @param response
+    * @return
+    */
    public boolean isRange(ResponseQA response)
    {
       boolean valid = false;
@@ -120,9 +130,13 @@ public class DataValidator implements GlobalVar
       return valid;
    }
 
-   // checks if the first element of the answer has currency range values
-   // if that is the case, it returns the 2 values in a long format as elements
-   // of an arraylist
+   
+   /**checks if the first element of the answer has currency range values 
+    * if that is the case, it returns the 2 values in a long format 
+    * as elements of an arraylist
+    * @param response
+    * @return
+    */
    public ArrayList<Long> returnCurrValues(ResponseQA response)
    {
       String str = response.getAnswers().get(0);
@@ -168,8 +182,11 @@ public class DataValidator implements GlobalVar
       return values;
    }
 
-   // checks if the first element of the answer from a given RsponseQA
-   // that's not empty is a Long
+  
+   /**checks if the first element of a non-empty answer from a RsponseQA is a Long
+    * @param response
+    * @return
+    */
    public static boolean isLong(ResponseQA response)
    {
       int i = 0;
@@ -194,8 +211,10 @@ public class DataValidator implements GlobalVar
       return flag;
    }
 
-   // checks if the first element of the answer from a given RsponseQA object is
-   // an age
+   /**checks if the first element of the answer from a given RsponseQA object is an age
+    * @param response
+    * @return
+    */
    public boolean isAge(ResponseQA response)
    {
       String str = response.getAnswers().get(0);

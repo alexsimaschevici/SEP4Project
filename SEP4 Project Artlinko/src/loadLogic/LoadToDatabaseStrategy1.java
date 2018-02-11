@@ -2,10 +2,12 @@ package loadLogic;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import services.IDGen;
 import config.StructDefinitionElements;
 import dbadaptor.DatabaseAdapter;
 import dbadaptor.IDatabaseAdapter;
@@ -35,40 +37,45 @@ public class LoadToDatabaseStrategy1 implements ILoadToDatabase, StructDefinitio
 		
 		//case general survey
 		
-		
-		
-		
-		
+
 	}
 
+	/*
+
+//	public void newGeneralSurveyColumn(List<ResponseQA> collection) throws SQLException{
+//		System.out.println("START newGeneralSurveyColumn");
+//	for(ResponseQA item: collection){
+//		if(item.getProperty(GENERAL)&& item.getProperty(SURVEY))
+//		adapter.newGeneralSurveyColumn(item.getQuestion());
+//	}
+//	System.out.println("DONE newGeneralSurveyColumn");
+//	}
+//
+
+//	public void newSurveyInstanceColumn(List<ResponseQA> collection) throws SQLException{
+//		System.out.println("START newSurveyInstanceColumn");
+//	for(ResponseQA item: collection)	{
+//		if(item.getProperty(SURVEY)&& item.getProperty(INSTANCE))
+//		adapter.newSurveyInstanceColumn(item.getQuestion());
+//	}
+//	System.out.println("DONE newSurveyInstanceColumn");
+//	}*/
+
+	
 	/**
-	 * build column for general survey 
+	 * Generates the strings to be used in the statements for registering General Survey data
 	 * @param collection
+	 * @param structure
 	 * @throws SQLException
 	 */
-	public void newGeneralSurveyColumn(List<ResponseQA> collection) throws SQLException{
-		System.out.println("START newGeneralSurveyColumn");
-	for(ResponseQA item: collection){
-		if(item.getProperty(GENERAL)&& item.getProperty(SURVEY))
-		adapter.newGeneralSurveyColumn(item.getQuestion());
+	public void newGeneralSurvey(SurveyResponsesCollection collection) throws SQLException {
+		System.out.println("Start inserting the survey unique id");
+		
+		adapter.newGeneralSurvey(collection.getSurveys().get(0).getEntireSurveyID());
+		System.out.println("DONE General Survey");
 	}
-	System.out.println("DONE newGeneralSurveyColumn");
-	}
-
-	/**
-	 * build column for survey instance
-	 * @param collection
-	 * @throws SQLException
-	 */
-	public void newSurveyInstanceColumn(List<ResponseQA> collection) throws SQLException{
-		System.out.println("START newSurveyInstanceColumn");
-	for(ResponseQA item: collection)	{
-		if(item.getProperty(SURVEY)&& item.getProperty(INSTANCE))
-		adapter.newSurveyInstanceColumn(item.getQuestion());
-	}
-	System.out.println("DONE newSurveyInstanceColumn");
-	}
-
+	
+	
 	
 	/**
 	 * Inserts all survey instances ids (a.k.a. persons who responded) into database
@@ -78,89 +85,73 @@ public class LoadToDatabaseStrategy1 implements ILoadToDatabase, StructDefinitio
 	public void newPerson(List<ResponseQA> collection) throws SQLException{
 		System.out.println("Start Person adding");
 		List<String> temp= new ArrayList<String>();
+		int count=0;
+		
 		for(ResponseQA item: collection)	{
-			//if(item.getProperty(PERSON))
 			if(!temp.contains(item.getSurveyInstanceID())){
+				count++;
 			adapter.newPerson(item.getSurveyInstanceID());
 			temp.add(item.getSurveyInstanceID());
 			}
 		}
-		System.out.println("Done Person adding");
+		System.out.println("Done Person adding "+count);
 	}
 	
 	
-	/**
-	 * Generates the strings to be used in the statements for registering General Survey data
-	 * @param collection
-	 * @param structure
-	 * @throws SQLException
-	 */
-	public void newGeneralSurvey(SurveyResponsesCollection collection) throws SQLException {
-		System.out.println("Start General Survey");
-
-		List<String> struct = new ArrayList<String>();
-		for (ResponseQA el : collection.getSurveys()) {
-			if(el.getProperty(GENERAL)==true&&el.getProperty(SURVEY)==true&&!struct.contains(el.getQuestion())){
-				struct.add(el.getQuestion());
-			}
-		}
-		List<ResponseQA> itemList = new ArrayList<ResponseQA>();
-		int count=0;
-		for(ResponseQA el : collection.getSurveys()){
-			if(el.getProperty(GENERAL)&&el.getProperty(SURVEY)){
-				itemList.add(el);
-				count++;
-			}
-			if(count==struct.size()){
-				System.out.println("Run query "+struct.size()+" "+itemList.size());
-			adapter.newGeneralSurvey(el.getSurveyInstanceID(), struct, itemList);
-			itemList= new ArrayList<ResponseQA>();
-			count=0;
-			}
-		}	
-		System.out.println("DONE General Survey");
-	}
+	
 
 	
 
 	public void newSurveyInstances(SurveyResponsesCollection collection) throws SQLException{
 		System.out.println("Start Survey Instance");
 
-		List<String> struct = new ArrayList<String>();
-		for (ResponseQA el : collection.getSurveys()) {
-			if(el.getProperty(INSTANCE)&&el.getProperty(SURVEY)&&!struct.contains(el.getQuestion())){
-				struct.add(el.getQuestion());
+		String entireSurveyID = collection.getSurveys().get(0).getEntireSurveyID();
+		
+		List<String> temp= new ArrayList<String>();
+		int count=0;
+		
+		for(ResponseQA item: collection.getSurveys())	{
+			if(!temp.contains(item.getSurveyInstanceID())){
+			temp.add(item.getSurveyInstanceID());
 			}
 		}
-		List<ResponseQA> itemList = new ArrayList<ResponseQA>();
-		int count=0;
-		for(ResponseQA el : collection.getSurveys()){
-			if(el.getProperty(GENERAL)==true&&el.getProperty(SURVEY)==true){
-				itemList.add(el);
-				count++;
-			}
-			if(count==struct.size()){
-				System.out.println("Run query "+struct.size()+" "+itemList.size());
-			adapter.newSurveyInstance(el.getSurveyInstanceID(), el.getSurveyInstanceID(),el.getSurveyInstanceID(), struct, itemList);
-			itemList= new ArrayList<ResponseQA>();
-			count=0;
-			}
-		}	
+		
+		for(String el: temp){
+			
+		String id= IDGen.generateId();	
+			
+		adapter.newSurveyInstance(entireSurveyID, el, id);
+		}
+		
 		System.out.println("DONE Survey Instance");
 	}
 	
 	
-	public void newSGQ(SurveyResponsesCollection collection) throws SQLException {
+	public HashMap<String, String> newSGDimension (List<String> types)throws SQLException{
+		
+		HashMap<String, String> rezultedID = new HashMap<String, String>();
+		
+		for(String el: types){
+			String id= IDGen.generateId();
+			rezultedID.put(el, id);
+			adapter.newSGDimension(el, id);
+		}
+		return rezultedID;
+	}
+	
+	
+	
+	public void newSGQ(SurveyResponsesCollection collection, String dimensionID) throws SQLException {
 		
 		System.out.println("START new SGQ");
 		List<String> tmp= new ArrayList<String>();
 		for(ResponseQA el: collection.getSurveys() ){
-			if(el.getProperty(QUESTION)&&el.getProperty(SGD)/*&&!tmp.contains(el.getQuestion())*/){
-				adapter.newSGQ(el.getOtherColumnName(), el.getQuestion(), el.getEntireSurveyID());
+			if(el.getProperty(QUESTION)&&el.getProperty(SGD)){
+				adapter.newSGQ(el.getQuestionID(), el.getQuestion(), dimensionID);
 			}
 		}
 		System.out.println("END new SGQ");
-		//public void newSGQ(String dimension_name, String question_text, String surveyID) throws SQLException
+		
 	}
 	
 	
@@ -168,42 +159,65 @@ public void newLQ(SurveyResponsesCollection collection) throws SQLException {
 		
 		System.out.println("START new LQ");
 		List<String> tmp= new ArrayList<String>();
-		String[] cat= {"general"};
 		for(ResponseQA el: collection.getSurveys() ){
-			if(el.getProperty(QUESTION)&&el.getProperty(OTHER)/*&&!tmp.contains(el.getQuestion())*/){
-				adapter.newLQ(cat, el.getQuestion(), el.getEntireSurveyID(), el.getQuestionID());
+			if(el.getProperty(QUESTION)&&el.getProperty(OTHER)){
+				adapter.newLQ(el.getQuestionID(), el.getQuestion());
 			}
 		}
 		System.out.println("END new LQ");
-		//public void newSGQ(String dimension_name, String question_text, String surveyID) throws SQLException
+
 	}
 	
 public void newLayerResponse(SurveyResponsesCollection collection) throws SQLException {
 	
 	System.out.println("START new LResp");
 	List<String> tmp= new ArrayList<String>();
-	String[] cat= {"general"};
 	for(ResponseQA el: collection.getSurveys() ){
-		if(el.getProperty(QUESTION)&&el.getProperty(OTHER)/*&&!tmp.contains(el.getQuestion())*/){
-			//adapter.newLayerResponse(LQ_ID, answer, surveyID, surveyInstanceID, personID, newLR_ID);
-			adapter.newLayerResponse(el.getQuestionID(), el.getAnswers().get(0), el.getEntireSurveyID(), el.getSurveyInstanceID(), el.getSurveyInstanceID(), el.getAnswerID(), el.getAnswerID());//(cat, el.getQuestion(), el.getEntireSurveyID());
+		if(el.getProperty(QUESTION)&&el.getProperty(OTHER)){
+			adapter.newLayerResponse(el.getAnswerID(), el.getAnswers().get(0));
 		}
 	}
 	System.out.println("END new LResp");
-	//public void newSGQ(String dimension_name, String question_text, String surveyID) throws SQLException
+	
 }
 
 public void newSGResponse(SurveyResponsesCollection collection) throws SQLException {
 	
-	System.out.println("START new SGQ");
+	System.out.println("START new SGR");
 	List<String> tmp= new ArrayList<String>();
 	for(ResponseQA el: collection.getSurveys() ){
-		if(el.getProperty(QUESTION)&&el.getProperty(SGD)/*&&!tmp.contains(el.getQuestion())*/){
-			adapter.newSGResponse(el.getQuestionID(), el.getAnswers().get(0), el.getEntireSurveyID(), el.getSurveyInstanceID(), el.getSurveyInstanceID(), el.getAnswerID());
+		if(el.getProperty(QUESTION)&&el.getProperty(SGD)){
+			adapter.newSGResponse(el.getAnswerID(),el.getAnswers().get(0));
 		}
 	}
-	System.out.println("END new SGQ");
-	//public void newSGQ(String dimension_name, String question_text, String surveyID) throws SQLException
+	System.out.println("END new SGR");
+	
+}
+
+/*String personID, String surveyID,
+		String surveyInstanceId, String sGQ_ID, String sGA_ID*/
+public void newfact_SGResponse (SurveyResponsesCollection collection) throws SQLException{
+	System.out.println("START new SGResponse");
+	List<String> tmp= new ArrayList<String>();
+	for(ResponseQA el: collection.getSurveys() ){
+		if(el.getProperty(QUESTION)&&el.getProperty(SGD)){
+			adapter.newfact_SGResponse(el.getSurveyInstanceID(), el.getEntireSurveyID(), el.getQuestionID(), el.getAnswerID());
+		}
+	}
+	System.out.println("END new SGResponse");
+}
+
+public void newfact_LResponse(SurveyResponsesCollection collection) throws SQLException {
+	
+	System.out.println("START new LResp");
+	List<String> tmp= new ArrayList<String>();
+	for(ResponseQA el: collection.getSurveys() ){
+		if(el.getProperty(QUESTION)&&el.getProperty(OTHER)){
+			adapter.newfact_LResponse(el.getSurveyInstanceID(), el.getEntireSurveyID(), el.getQuestionID(), el.getAnswerID());
+		}
+	}
+	System.out.println("END new LResp");
+	
 }
 
 

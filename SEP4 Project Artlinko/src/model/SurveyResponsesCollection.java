@@ -16,7 +16,9 @@ import controller.SystemController;
  * @author Alexandru, Cristian
  */
 
+
 public class SurveyResponsesCollection implements GlobalVar, StructDefinitionElements
+
 {
 
    List<ResponseQA> surveyResp;
@@ -52,7 +54,10 @@ public class SurveyResponsesCollection implements GlobalVar, StructDefinitionEle
       return surveyResp.size();
    }
 
-   // TO BE IMPLEMENTED
+   /**This method gets all the elements of a column with the corresponding questionID
+    * @param questionID
+    * @return List<ResponseQA>
+    */
    public List<ResponseQA> getColumn(String questionID)
    {
       ArrayList<ResponseQA> list = new ArrayList<ResponseQA>();
@@ -62,7 +67,10 @@ public class SurveyResponsesCollection implements GlobalVar, StructDefinitionEle
       return list;
    }
 
-   // TO BE IMPLEMENTED
+   /**This method returns a row from the table, with the corresponding surveyInstanceID
+    * @param surveyInstanceID
+    * @return List<ResponseQA> 
+    */
    public List<ResponseQA> getRow(String surveyInstanceID)
    {
       ArrayList<ResponseQA> list = new ArrayList<ResponseQA>();
@@ -72,7 +80,11 @@ public class SurveyResponsesCollection implements GlobalVar, StructDefinitionEle
       return list;
    }
 
-   // VERSION 1
+   
+   /**The method returns all the answers of the same category 
+    * @param properties
+    * @return
+    */
    public List<ResponseQA> getByPropertyHM(HashMap<String, Boolean> properties)
    {
       ArrayList<ResponseQA> list = new ArrayList<ResponseQA>();
@@ -87,7 +99,11 @@ public class SurveyResponsesCollection implements GlobalVar, StructDefinitionEle
 
    }
 
-   // VERSION 2
+   
+   /**This method returns a list of all the answers that share one property
+    * @param propKey
+    * @return
+    */
    public List<ResponseQA> getByPropertyKey(String propKey)
    {
       ArrayList<ResponseQA> list = new ArrayList<>();
@@ -99,6 +115,11 @@ public class SurveyResponsesCollection implements GlobalVar, StructDefinitionEle
       return list;
    }
 
+   /**Assist method to help compare 2 hashmaps
+    * @param mapA
+    * @param mapB
+    * @return
+    */
    public static boolean mapsAreEqual(HashMap<String, Boolean> mapA,
          HashMap<String, Boolean> mapB)
    {

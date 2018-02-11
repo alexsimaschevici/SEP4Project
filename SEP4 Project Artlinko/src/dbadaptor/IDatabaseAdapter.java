@@ -20,20 +20,20 @@ public interface IDatabaseAdapter
 	 * @param column_name
 	 * @throws SQLException
 	 */
-	public void newGeneralSurveyColumn(String column_name) throws SQLException;
-	/**
-	 * column_name: this is the string that is found at the top of a CSV column, the Q.
-	 * Add a new column to the Survey Instance
-	 * @param column_name
-	 * @throws SQLException
-	 */
-	public void newSurveyInstanceColumn(String column_name) throws SQLException;
-	/**
-	 * column_name: this is the string that is found at the top of a CSV column, the Q.
-	 * nextPersonID: auto-generated unique ID
-	 * @param nextPersonID
-	 * @throws SQLException
-	 */
+//	public void newGeneralSurveyColumn(String column_name) throws SQLException;
+//	/**
+//	 * column_name: this is the string that is found at the top of a CSV column, the Q.
+//	 * Add a new column to the Survey Instance
+//	 * @param column_name
+//	 * @throws SQLException
+//	 */
+//	public void newSurveyInstanceColumn(String column_name) throws SQLException;
+//	/**
+//	 * column_name: this is the string that is found at the top of a CSV column, the Q.
+//	 * nextPersonID: auto-generated unique ID
+//	 * @param nextPersonID
+//	 * @throws SQLException
+//	 */
 	public void newPerson(String nextPersonID) throws SQLException;
 	/**
 	 * Insert new General Survey
@@ -44,8 +44,7 @@ public interface IDatabaseAdapter
 	 * @param values
 	 * @throws SQLException
 	 */
-	public void newGeneralSurvey(String nextSurveyID, List<String> column_names,
-			List<ResponseQA> values) throws SQLException ;
+	public void newGeneralSurvey(String SurveyID) throws SQLException ;
 	/**
 	 * Insert new Survey Instance
 	 * nextSurveyId: auto-generated unique ID
@@ -57,8 +56,7 @@ public interface IDatabaseAdapter
 	 * @param values
 	 * @throws SQLException
 	 */
-	public void newSurveyInstance(String nextSurveyID,String nextPersonID,String nextSurveyInstanceID,List<String> column_names,
-			List<ResponseQA> values) throws SQLException;
+	public void newSurveyInstance(String SurveyID,String InstanceId, String generatedID) throws SQLException;
 	/**
 	 * Insert new Standard Graph Question
 	 * dimension_name: 	Just a string-- for example "I/We", or whatever the user happened to type in as the GRAPH dimension to use
@@ -81,7 +79,7 @@ public interface IDatabaseAdapter
 	 * @param surveyID
 	 * @throws SQLException
 	 */
-	public void newLQ(String[] categories, String question_text, String surveyID, String qID) throws SQLException;
+	public void newLQ(String questionID, String question_text) throws SQLException;
 	/**
 	 * Insert new Layer Response
 	 * LQ_ID:	 			RETREIVE this as a result of that time you called newLQ(). it is the question ID.
@@ -97,8 +95,7 @@ public interface IDatabaseAdapter
 	 * @param newLR_ID
 	 * @throws SQLException
 	 */
-	public void newLayerResponse(String LQ_ID,String answer,String surveyID,String surveyInstanceID,String personID,
-			String newLR_ID, String newLA_ID) throws SQLException;
+	public void newLayerResponse(String id, String text) throws SQLException;
 	/**
 	 * LQ_ID:	 			RETREIVE this as a result of that time you called newLQ(). it is the question ID.
 	 * SurveyID:			Batch survey ID
@@ -114,8 +111,7 @@ public interface IDatabaseAdapter
 	 * @param newSGR_ID
 	 * @throws SQLException
 	 */
-	public void newSGResponse(String SGQ_ID,String answer,String surveyID,String surveyInstanceID,String personID,
-			String newSGR_ID) throws SQLException;
+	public void newSGResponse(String SGA_ID, String answer) throws SQLException;
 	/**
 	 * Find Id
 	 * @param statement
@@ -130,4 +126,15 @@ public interface IDatabaseAdapter
 	 * @return
 	 */
 	public String[] getColumnList(String table)throws SQLException;
+	
+	
+	public void  newSGDimension(String dimensionName, String id)throws SQLException;
+	
+	
+	public void newfact_SGResponse (String personID, String surveyID,
+		 String sGQ_ID, String sGA_ID) throws SQLException;
+	
+	public void newfact_LResponse (String personID, String entireSurveyID,
+			 String LQ_ID, String LA_ID) throws SQLException;
+	
 }
